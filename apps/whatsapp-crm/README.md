@@ -1,16 +1,17 @@
 # WhatsApp CRM — AIOX MVP
 
-CLI-first WhatsApp CRM with Kanban board and AI agents (OpenAI / Gemini).
+CLI-first WhatsApp CRM with Kanban board and AI agents (OpenAI / Gemini) + Next.js dashboard.
 
-> **Constitution Art. I — CLI First:** todo o sistema funciona 100% via CLI. UI Next.js virá em story posterior, observando este backend.
+> **Constitution Art. I — CLI First:** todo o sistema funciona 100% via CLI. O dashboard apenas observa/expõe; toda lógica de negócio fica em `src/crm/*`.
 
 ## Stack
 
-- **Runtime:** Node.js 20+ (CommonJS, ES2022)
+- **Runtime:** Node.js 20+
 - **WhatsApp:** `whatsapp-web.js` (QR Code + sessão local)
 - **DB:** SQLite via `better-sqlite3` (zero ops; migração para Supabase é trivial)
 - **AI:** `openai` + `@google/generative-ai`
 - **CLI:** `commander`
+- **Dashboard:** Next.js 14 (App Router) + `@dnd-kit` (Kanban drag-and-drop)
 
 ## Setup
 
@@ -95,16 +96,36 @@ npx whatsapp-crm agent reply 1 --agent vendas
 npx whatsapp-crm agent reply 1 --column "Novo"
 ```
 
+## Dashboard Next.js
+
+Em paralelo ao CLI, o dashboard expõe Inbox + Kanban drag-and-drop + Agent Builder:
+
+```bash
+# Em um terminal, rode o worker WhatsApp (precisa estar ativo para enviar mensagens)
+npx whatsapp-crm qr
+
+# Em outro terminal, rode o dashboard
+npm run dev
+# abre http://localhost:3100
+```
+
+Páginas disponíveis:
+- `/` — status do worker, contadores e instruções de QR
+- `/inbox` — conversas + thread + envio + "Sugerir com IA"
+- `/kanban` — board com drag-and-drop entre colunas
+- `/agents` — criar / desligar / atribuir agentes a colunas
+
+> Toda lógica continua nos módulos `src/crm/*`. As API routes (`app/api/*`) são camadas finas que apenas expõem essa lógica — o CLI e o dashboard compartilham 100% do código de domínio.
+
 ## Fluxo típico
 
-1. `npm run migrate` → schema criado em `data/whatsapp-crm.db`
-2. `npx whatsapp-crm board init`
-3. `npx whatsapp-crm qr` → escaneia QR no celular
-4. Mensagens recebidas → contato + conversa + card auto-criados na coluna "Novo"
-5. `npx whatsapp-crm agent create ...` → configura agente IA
-6. `npx whatsapp-crm agent assign vendas "Novo"`
-7. `npx whatsapp-crm agent reply <conv-id>` → gera sugestão
-8. `npx whatsapp-crm send <phone> "<resposta-revisada>"` → operador envia
+1. `npm install` → instala backend + dashboard
+2. `npm run migrate` → schema criado em `data/whatsapp-crm.db`
+3. `npx whatsapp-crm board init`
+4. `npx whatsapp-crm qr` → escaneia QR no celular (worker fica rodando)
+5. Mensagens recebidas → contato + conversa + card auto-criados na coluna "Novo"
+6. `npm run dev` (outro terminal) → abre dashboard
+7. Crie agentes em `/agents`, atribua a colunas, arraste cards em `/kanban`, responda em `/inbox`
 
 ## Testes
 

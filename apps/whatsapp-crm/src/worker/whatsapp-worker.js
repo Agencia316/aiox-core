@@ -6,6 +6,15 @@ const { handleIncoming, handleOutgoing } = require('./message-handler');
 
 let _client = null;
 let _status = 'IDLE';
+let _lastQr = null;
+
+function getLastQr() {
+  return _lastQr;
+}
+
+function clearLastQr() {
+  _lastQr = null;
+}
 
 function loadWhatsappLib() {
   try {
@@ -57,6 +66,7 @@ async function startClient({ onQr, onReady, onAuthFailure } = {}) {
   });
 
   client.on('qr', (qr) => {
+    _lastQr = qr;
     logger.info('QR Code received, scan it with your phone');
     if (qrTerm && typeof qrTerm.generate === 'function') {
       qrTerm.generate(qr, { small: true });
@@ -66,6 +76,7 @@ async function startClient({ onQr, onReady, onAuthFailure } = {}) {
 
   client.on('ready', () => {
     setStatus('READY');
+    _lastQr = null;
     logger.info('WhatsApp client ready');
     if (typeof onReady === 'function') onReady();
   });
@@ -136,4 +147,4 @@ async function sendText({ phone, text }) {
   }
 }
 
-module.exports = { startClient, stopClient, sendText, getStatus };
+module.exports = { startClient, stopClient, sendText, getStatus, getLastQr, clearLastQr };

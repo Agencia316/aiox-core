@@ -1,8 +1,8 @@
 {
   "name": "@aiox/whatsapp-crm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "WhatsApp CRM Kanban with AI agents (OpenAI/Gemini) — CLI First MVP",
+  "description": "WhatsApp CRM Kanban with AI agents (OpenAI/Gemini) — CLI + Next.js Dashboard",
   "main": "src/cli/index.js",
   "bin": {
     "whatsapp-crm": "bin/whatsapp-crm.js"
@@ -11,6 +11,9 @@
     "start": "node bin/whatsapp-crm.js",
     "qr": "node bin/whatsapp-crm.js qr",
     "migrate": "node src/db/migrate.js",
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "serve": "next start -p 3100",
     "test": "jest --rootDir tests",
     "test:watch": "jest --rootDir tests --watch",
     "lint": "eslint src bin tests --ext .js"
@@ -19,12 +22,19 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@google/generative-ai": "^0.21.0",
     "better-sqlite3": "^11.3.0",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
+    "next": "^14.2.15",
     "openai": "^4.68.0",
+    "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "whatsapp-web.js": "^1.26.0"
   },
   "devDependencies": {

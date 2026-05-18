@@ -8,3 +8,5 @@ sessions/
 .env.local
 coverage/
 .jest-cache/
+.next/
+next-env.d.ts
