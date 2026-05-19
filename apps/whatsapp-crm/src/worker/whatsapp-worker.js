@@ -57,12 +57,16 @@ async function startClient({ onQr, onReady, onAuthFailure } = {}) {
   const headless = (process.env.WHATSAPP_HEADLESS || 'true').toLowerCase() !== 'false';
 
   setStatus('CONNECTING');
+  const puppeteerOpts = {
+    headless,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  };
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    puppeteerOpts.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
   const client = new lib.Client({
     authStrategy: new lib.LocalAuth({ dataPath: resolveSessionPath() }),
-    puppeteer: {
-      headless,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    },
+    puppeteer: puppeteerOpts,
   });
 
   client.on('qr', (qr) => {

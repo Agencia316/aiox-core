@@ -13,14 +13,35 @@ CLI-first WhatsApp CRM with Kanban board and AI agents (OpenAI / Gemini) + Next.
 - **CLI:** `commander`
 - **Dashboard:** Next.js 14 (App Router) + `@dnd-kit` (Kanban drag-and-drop)
 
-## Setup
+## Setup — escolha um caminho
+
+### A) Docker (recomendado para Windows / setup zero)
+
+Pré-requisito: [Docker Desktop](https://www.docker.com/products/docker-desktop) instalado e rodando.
 
 ```bash
 cd apps/whatsapp-crm
-npm install
+cp .env.example .env        # opcional: preencha OPENAI_API_KEY e/ou GEMINI_API_KEY
+docker compose up --build   # primeira vez: ~5 min (build do Chromium + deps)
+```
+
+Pronto. Abra **http://localhost:3100**. A pasta `data/` (SQLite) e `sessions/` (login do WhatsApp) ficam montadas via volume — sobrevivem a `docker compose down`.
+
+Para parar:
+```bash
+docker compose down         # mantém dados
+docker compose down -v      # apaga sessão WhatsApp também
+```
+
+### B) Native (sem Docker, Mac/Linux ou WSL)
+
+```bash
+cd apps/whatsapp-crm
+npm install                 # ~2-3 min (baixa Chromium do Puppeteer)
 cp .env.example .env
-# preencha OPENAI_API_KEY e/ou GEMINI_API_KEY no .env
+# preencha OPENAI_API_KEY e/ou GEMINI_API_KEY
 npm run migrate
+npm run dev                 # http://localhost:3100
 ```
 
 ## Comandos
