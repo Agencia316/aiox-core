@@ -24,35 +24,21 @@ App web para registrar e acompanhar as vendas dos seus ensaios fotográficos —
 
 > Para adicionar/alterar tipos, edite a lista `TIPOS_ENSAIO` no início de `app.js`.
 
-## Primeiro acesso
+## Como usar
 
-1. Abra o app (link de hospedagem ou `index.html`).
-2. Toque em **Criar conta**, informe seu e-mail e uma senha (mínimo 6 caracteres).
-3. Faça login. Use o **mesmo e-mail e senha** em qualquer aparelho para ver os mesmos dados.
+1. Abra o link do app (no celular ou no PC). **Não tem login** — já abre direto pronto pra usar.
+2. Toque em **Nova** para registrar uma venda.
+3. Os dados ficam na nuvem e aparecem igual em qualquer aparelho que abrir o mesmo link.
 
-### Fazer o link de confirmação abrir no app (recomendado)
-
-Mantendo a confirmação por e-mail ligada, configure as URLs para o link do e-mail
-voltar para o app (em vez de cair em `localhost`):
-
-1. Acesse: <https://supabase.com/dashboard/project/ziprirvpvlvxqjuseeyg/auth/url-configuration>
-2. Em **Site URL**, cole a URL onde o app está hospedado, ex.:
-   `https://aiox-core-git-claude-photography-sa-6b24ab-agencia316s-projects.vercel.app`
-3. Em **Redirect URLs**, clique **Add URL** e cole a mesma URL.
-4. Salve. (O app já envia esse retorno automaticamente via `emailRedirectTo`.)
-
-### Alternativa: cadastro instantâneo (sem confirmar e-mail)
-
-Se preferir entrar na hora, sem confirmação:
-
-1. Acesse: <https://supabase.com/dashboard/project/ziprirvpvlvxqjuseeyg/auth/providers>
-2. Em **Email**, desligue **Confirm email** e salve.
+> ⚠️ **Atenção (segurança):** como não há login, qualquer pessoa que tiver o link
+> consegue ver e editar as vendas. Trate o link como secreto — não publique nem
+> compartilhe. Se um dia quiser proteger com senha, dá pra reativar o login.
 
 ## Backend (nuvem)
 
 - Plataforma: **Supabase** (projeto `vendas-ensaios`, região São Paulo)
-- Tabela `vendas` protegida por **RLS**: cada conta só enxerga seus próprios dados
-- As chaves no `app.js` são **públicas** (a segurança é garantida pelo RLS no banco)
+- Tabela `vendas` com acesso aberto pela chave pública (sem login) — modelo "link secreto"
+- As chaves no `app.js` são **públicas** por design
 
 ## Arquivos
 
@@ -60,7 +46,7 @@ Se preferir entrar na hora, sem confirmação:
 |---|---|
 | `index.html` | Estrutura das telas |
 | `styles.css` | Visual / layout responsivo |
-| `app.js` | Lógica (login, vendas, gráficos, relatórios) |
+| `app.js` | Lógica (vendas, gráficos, relatórios) |
 | `manifest.webmanifest` + `sw.js` + `icon.svg` | Instalação como app (PWA) |
 
 ## Rodar localmente

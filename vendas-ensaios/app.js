@@ -21,7 +21,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===================== ESTADO =====================
 const state = {
-  user: null,
   vendas: [],
   period: 'dia',
   tab: 'painel',
@@ -77,90 +76,8 @@ function showToast(msg, isError = false) {
   showToast._t = setTimeout(() => { t.hidden = true; }, 2600);
 }
 
-// ===================== AUTENTICAÇÃO =====================
-let authMode = 'login'; // 'login' | 'signup'
-
-function setAuthMode(mode) {
-  authMode = mode;
-  const isLogin = mode === 'login';
-  $('#auth-submit').textContent = isLogin ? 'Entrar' : 'Criar conta';
-  $('#auth-toggle-text').textContent = isLogin ? 'Ainda não tem conta?' : 'Já tem uma conta?';
-  $('#auth-toggle-btn').textContent = isLogin ? 'Criar conta' : 'Entrar';
-  $('#auth-password').autocomplete = isLogin ? 'current-password' : 'new-password';
-  setAuthMessage('');
-}
-function setAuthMessage(msg, type = '') {
-  const el = $('#auth-message');
-  el.textContent = msg;
-  el.className = 'auth-message' + (type ? ' ' + type : '');
-}
-
-$('#auth-toggle-btn').addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
-
-$('#auth-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = $('#auth-email').value.trim();
-  const password = $('#auth-password').value;
-  const btn = $('#auth-submit');
-  btn.disabled = true;
-  setAuthMessage('Aguarde...', '');
-
-  try {
-    if (authMode === 'signup') {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { emailRedirectTo: window.location.origin },
-      });
-      if (error) throw error;
-      if (data.session) {
-        setAuthMessage('Conta criada!', 'success');
-      } else {
-        setAuthMessage('Conta criada! Verifique seu e-mail para confirmar e depois entre.', 'success');
-        setAuthMode('login');
-      }
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-    }
-  } catch (err) {
-    setAuthMessage(translateAuthError(err.message), 'error');
-  } finally {
-    btn.disabled = false;
-  }
-});
-
-function translateAuthError(msg = '') {
-  const m = msg.toLowerCase();
-  if (m.includes('invalid login')) return 'E-mail ou senha incorretos.';
-  if (m.includes('email not confirmed')) return 'Confirme seu e-mail antes de entrar (verifique a caixa de entrada).';
-  if (m.includes('already registered') || m.includes('already been registered')) return 'Este e-mail já tem conta. Use "Entrar".';
-  if (m.includes('password should be')) return 'A senha deve ter no mínimo 6 caracteres.';
-  if (m.includes('rate limit') || m.includes('too many')) return 'Muitas tentativas. Aguarde um momento.';
-  if (m.includes('unable to validate email') || m.includes('invalid email')) return 'E-mail inválido.';
-  return msg || 'Não foi possível concluir. Tente novamente.';
-}
-
-$('#logout-btn').addEventListener('click', async () => {
-  await supabase.auth.signOut();
-});
-
-supabase.auth.onAuthStateChange((_event, session) => {
-  state.user = session?.user ?? null;
-  if (state.user) enterApp();
-  else exitApp();
-});
-
-function exitApp() {
-  $('#app-view').hidden = true;
-  $('#auth-view').style.display = '';
-  $('#auth-form').reset();
-}
-
+// ===================== INICIALIZAÇÃO DO APP =====================
 async function enterApp() {
-  $('#auth-view').style.display = 'none';
-  $('#app-view').hidden = false;
-  $('#user-email').textContent = state.user.email;
   await loadVendas();
 }
 
@@ -534,7 +451,7 @@ $$('.seg-btn').forEach((b) => b.addEventListener('click', () => {
 // ===================== INIT =====================
 fillTipoSelects();
 resetForm();
-setAuthMode('login');
+enterApp();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

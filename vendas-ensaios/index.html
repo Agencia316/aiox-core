@@ -11,45 +11,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- ===================== TELA DE LOGIN ===================== -->
-  <main id="auth-view" class="auth-view">
-    <div class="auth-card">
-      <div class="auth-brand">
-        <div class="auth-logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-            <circle cx="12" cy="13" r="4" />
-          </svg>
-        </div>
-        <h1>Vendas de Ensaios</h1>
-        <p class="auth-sub">Controle suas vendas de ensaios fotográficos</p>
-      </div>
-
-      <form id="auth-form" class="auth-form" autocomplete="on">
-        <label class="field">
-          <span>E-mail</span>
-          <input type="email" id="auth-email" required placeholder="voce@email.com" autocomplete="email" />
-        </label>
-        <label class="field">
-          <span>Senha</span>
-          <input type="password" id="auth-password" required minlength="6" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
-        </label>
-
-        <p id="auth-message" class="auth-message" role="alert"></p>
-
-        <button type="submit" id="auth-submit" class="btn btn-primary btn-block">Entrar</button>
-      </form>
-
-      <p class="auth-toggle">
-        <span id="auth-toggle-text">Ainda não tem conta?</span>
-        <button type="button" id="auth-toggle-btn" class="link-btn">Criar conta</button>
-      </p>
-    </div>
-    <p class="auth-footer">Seus dados ficam salvos na nuvem e sincronizam entre celular e computador.</p>
-  </main>
-
   <!-- ===================== APP ===================== -->
-  <div id="app-view" class="app-view" hidden>
+  <div id="app-view" class="app-view">
     <header class="app-header">
       <div class="app-header-inner">
         <div class="app-title">
@@ -60,10 +23,6 @@
             </svg>
           </span>
           <strong>Vendas de Ensaios</strong>
-        </div>
-        <div class="app-header-actions">
-          <span id="user-email" class="user-email"></span>
-          <button id="logout-btn" class="btn btn-ghost btn-sm" title="Sair">Sair</button>
         </div>
       </div>
     </header>
