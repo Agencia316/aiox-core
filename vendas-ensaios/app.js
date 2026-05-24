@@ -107,7 +107,11 @@ $('#auth-form').addEventListener('submit', async (e) => {
 
   try {
     if (authMode === 'signup') {
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: window.location.origin },
+      });
       if (error) throw error;
       if (data.session) {
         setAuthMessage('Conta criada!', 'success');

@@ -30,16 +30,23 @@ App web para registrar e acompanhar as vendas dos seus ensaios fotográficos —
 2. Toque em **Criar conta**, informe seu e-mail e uma senha (mínimo 6 caracteres).
 3. Faça login. Use o **mesmo e-mail e senha** em qualquer aparelho para ver os mesmos dados.
 
-### Liberar cadastro instantâneo (recomendado, 1 passo)
+### Fazer o link de confirmação abrir no app (recomendado)
 
-Por padrão o Supabase pede confirmação de e-mail. Para entrar na hora, sem precisar
-confirmar e-mail:
+Mantendo a confirmação por e-mail ligada, configure as URLs para o link do e-mail
+voltar para o app (em vez de cair em `localhost`):
 
-1. Acesse o painel do projeto: <https://supabase.com/dashboard/project/ziprirvpvlvxqjuseeyg>
-2. Vá em **Authentication → Sign In / Providers → Email**
-3. Desligue **Confirm email** e salve.
+1. Acesse: <https://supabase.com/dashboard/project/ziprirvpvlvxqjuseeyg/auth/url-configuration>
+2. Em **Site URL**, cole a URL onde o app está hospedado, ex.:
+   `https://aiox-core-git-claude-photography-sa-6b24ab-agencia316s-projects.vercel.app`
+3. Em **Redirect URLs**, clique **Add URL** e cole a mesma URL.
+4. Salve. (O app já envia esse retorno automaticamente via `emailRedirectTo`.)
 
-(Se preferir manter a confirmação ligada, é só confirmar o e-mail uma vez antes do primeiro login.)
+### Alternativa: cadastro instantâneo (sem confirmar e-mail)
+
+Se preferir entrar na hora, sem confirmação:
+
+1. Acesse: <https://supabase.com/dashboard/project/ziprirvpvlvxqjuseeyg/auth/providers>
+2. Em **Email**, desligue **Confirm email** e salve.
 
 ## Backend (nuvem)
 
