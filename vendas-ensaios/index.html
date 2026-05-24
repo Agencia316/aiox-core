@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#7c3aed" />
+  <title>Vendas de Ensaios</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===================== TELA DE LOGIN ===================== -->
+  <main id="auth-view" class="auth-view">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
+        </div>
+        <h1>Vendas de Ensaios</h1>
+        <p class="auth-sub">Controle suas vendas de ensaios fotográficos</p>
+      </div>
+
+      <form id="auth-form" class="auth-form" autocomplete="on">
+        <label class="field">
+          <span>E-mail</span>
+          <input type="email" id="auth-email" required placeholder="voce@email.com" autocomplete="email" />
+        </label>
+        <label class="field">
+          <span>Senha</span>
+          <input type="password" id="auth-password" required minlength="6" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
+        </label>
+
+        <p id="auth-message" class="auth-message" role="alert"></p>
+
+        <button type="submit" id="auth-submit" class="btn btn-primary btn-block">Entrar</button>
+      </form>
+
+      <p class="auth-toggle">
+        <span id="auth-toggle-text">Ainda não tem conta?</span>
+        <button type="button" id="auth-toggle-btn" class="link-btn">Criar conta</button>
+      </p>
+    </div>
+    <p class="auth-footer">Seus dados ficam salvos na nuvem e sincronizam entre celular e computador.</p>
+  </main>
+
+  <!-- ===================== APP ===================== -->
+  <div id="app-view" class="app-view" hidden>
+    <header class="app-header">
+      <div class="app-header-inner">
+        <div class="app-title">
+          <span class="app-title-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+          </span>
+          <strong>Vendas de Ensaios</strong>
+        </div>
+        <div class="app-header-actions">
+          <span id="user-email" class="user-email"></span>
+          <button id="logout-btn" class="btn btn-ghost btn-sm" title="Sair">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- ---------- PAINEL ---------- -->
+      <section id="tab-painel" class="tab-panel">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">Hoje</span>
+            <strong class="kpi-value" id="kpi-hoje">R$ 0,00</strong>
+            <span class="kpi-sub" id="kpi-hoje-qtd">0 vendas</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Esta semana</span>
+            <strong class="kpi-value" id="kpi-semana">R$ 0,00</strong>
+            <span class="kpi-sub" id="kpi-semana-qtd">0 vendas</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Este mês</span>
+            <strong class="kpi-value" id="kpi-mes">R$ 0,00</strong>
+            <span class="kpi-sub" id="kpi-mes-qtd">0 vendas</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Ticket médio (mês)</span>
+            <strong class="kpi-value" id="kpi-ticket">R$ 0,00</strong>
+            <span class="kpi-sub" id="kpi-total">Total geral: R$ 0,00</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Evolução das vendas</h2>
+            <div class="seg" role="tablist" aria-label="Período">
+              <button class="seg-btn is-active" data-period="dia">Diário</button>
+              <button class="seg-btn" data-period="semana">Semanal</button>
+              <button class="seg-btn" data-period="mes">Mensal</button>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-evolucao"></canvas>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Por tipo de ensaio (mês)</h2></div>
+            <div class="chart-wrap">
+              <canvas id="chart-tipos"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Ranking de ensaios (mês)</h2></div>
+            <ul id="ranking-list" class="ranking"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- VENDAS ---------- -->
+      <section id="tab-vendas" class="tab-panel" hidden>
+        <div class="card">
+          <div class="filters">
+            <label class="field">
+              <span>Período</span>
+              <select id="filtro-periodo">
+                <option value="todos">Tudo</option>
+                <option value="hoje">Hoje</option>
+                <option value="semana">Esta semana</option>
+                <option value="mes" selected>Este mês</option>
+                <option value="mes-ant">Mês passado</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Tipo de ensaio</span>
+              <select id="filtro-tipo"><option value="todos">Todos</option></select>
+            </label>
+            <button id="btn-export" class="btn btn-ghost btn-sm" title="Exportar CSV">Exportar CSV</button>
+          </div>
+          <div class="list-summary" id="list-summary"></div>
+          <div id="vendas-list" class="vendas-list"></div>
+        </div>
+      </section>
+
+      <!-- ---------- NOVA / EDITAR ---------- -->
+      <section id="tab-nova" class="tab-panel" hidden>
+        <div class="card form-card">
+          <h2 id="form-title">Nova venda</h2>
+          <form id="venda-form">
+            <input type="hidden" id="venda-id" />
+            <label class="field">
+              <span>Data da venda</span>
+              <input type="date" id="venda-data" required />
+            </label>
+            <label class="field">
+              <span>Tipo de ensaio</span>
+              <select id="venda-tipo" required></select>
+            </label>
+            <label class="field">
+              <span>Valor (R$)</span>
+              <input type="text" inputmode="decimal" id="venda-valor" required placeholder="0,00" />
+            </label>
+            <label class="field">
+              <span>Cliente <small>(opcional)</small></span>
+              <input type="text" id="venda-cliente" placeholder="Nome do cliente" />
+            </label>
+            <label class="field">
+              <span>Observações <small>(opcional)</small></span>
+              <textarea id="venda-obs" rows="2" placeholder="Anotações sobre a venda"></textarea>
+            </label>
+            <p id="form-message" class="form-message" role="alert"></p>
+            <div class="form-actions">
+              <button type="button" id="form-cancel" class="btn btn-ghost" hidden>Cancelar edição</button>
+              <button type="submit" id="form-submit" class="btn btn-primary">Salvar venda</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ---------- NAV INFERIOR ---------- -->
+    <nav class="bottom-nav">
+      <button class="nav-btn is-active" data-tab="painel">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h8V3H3zM13 21h8V3h-8zM3 21h8v-6H3z"/></svg>
+        <span>Painel</span>
+      </button>
+      <button class="nav-btn" data-tab="vendas">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        <span>Vendas</span>
+      </button>
+      <button class="nav-btn nav-btn-add" data-tab="nova">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Nova</span>
+      </button>
+    </nav>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -22,6 +22,8 @@ module.exports = [
       '**/.next/**',
       // Dashboard has its own ESLint config
       'apps/dashboard/**',
+      // Standalone browser app (sales tracker) - not part of framework Node codebase
+      'vendas-ensaios/**',
       '**/.aiox-core/_legacy-v4.31.0/**',
       '**/web-bundles/**',
       '**/*.min.js',
