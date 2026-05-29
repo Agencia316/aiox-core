@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { logger } = require('../utils/logger');
+const { SCHEMA_SQL } = require('./schema');
 
 let _db = null;
 let _dbPath = null;
@@ -61,9 +62,7 @@ function closeDb() {
 }
 
 function applySchema(db) {
-  const schemaPath = path.join(__dirname, 'schema.sql');
-  const sql = fs.readFileSync(schemaPath, 'utf8');
-  db.exec(sql);
+  db.exec(SCHEMA_SQL);
 }
 
 module.exports = { getDb, closeDb, applySchema, resolveDbPath };

@@ -1,6 +1,8 @@
--- WhatsApp CRM schema (SQLite)
--- Drop in order to respect FKs in case of fresh re-run with PRAGMA foreign_keys=ON
+'use strict';
 
+// Schema kept inline (not a .sql file) so it bundles correctly with Next.js
+// route handlers — reading via __dirname breaks once webpack relocates the module.
+const SCHEMA_SQL = `
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS contacts (
@@ -77,3 +79,6 @@ CREATE TABLE IF NOT EXISTS agent_column_assignments (
   FOREIGN KEY (agent_id)  REFERENCES agents(id) ON DELETE CASCADE,
   FOREIGN KEY (column_id) REFERENCES kanban_columns(id) ON DELETE CASCADE
 );
+`;
+
+module.exports = { SCHEMA_SQL };
