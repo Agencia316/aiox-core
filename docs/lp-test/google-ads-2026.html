@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domínio Ads 2026 — Google Ads para prestadores de serviço</title>
+<meta name="description" content="O curso definitivo de Google Ads 2026 para encanadores, eletricistas, advogados, dentistas e prestadores de serviço que querem o telefone tocando todo dia." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #1d1d1f;
+    --white: #ffffff;
+    --gray: #6e6e73;
+    --gray-light: #86868b;
+    --bg-gray: #f5f5f7;
+    --blue: #0071e3;
+    --blue-hover: #0077ed;
+    --green: #1db954;
+    --radius: 22px;
+    --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+  .wrap-wide { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 52px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; align-items: center;
+  }
+  nav .wrap-wide { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+  .logo { font-weight: 700; font-size: 19px; letter-spacing: -0.02em; }
+  .logo span { color: var(--blue); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: var(--black); text-decoration: none; font-size: 13px; opacity: 0.85; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--blue); color: #fff !important; padding: 7px 16px;
+    border-radius: 980px; font-size: 13px; font-weight: 500; opacity: 1 !important;
+    transition: background 0.25s var(--ease);
+  }
+  .nav-cta:hover { background: var(--blue-hover); }
+  @media (max-width: 700px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 150px 0 90px;
+    text-align: center;
+    background: radial-gradient(120% 90% at 50% 0%, #fbfbfd 0%, #f0f4ff 60%, #ffffff 100%);
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 15px; font-weight: 600; color: var(--blue);
+    letter-spacing: 0.02em; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 22px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(95deg, #4285F4 0%, #EA4335 35%, #FBBC05 65%, #34A853 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .sub {
+    font-size: clamp(18px, 2.6vw, 26px);
+    color: var(--gray); font-weight: 400; max-width: 680px; margin: 0 auto 38px;
+    letter-spacing: -0.015em;
+  }
+  .btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 500;
+    padding: 14px 28px; border-radius: 980px; font-size: 17px;
+    transition: all 0.28s var(--ease); cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: var(--blue-hover); transform: scale(1.03); }
+  .btn-ghost { background: transparent; color: var(--blue); }
+  .btn-ghost:hover { text-decoration: underline; }
+  .hero-note { margin-top: 18px; font-size: 13px; color: var(--gray-light); }
+
+  .hero-visual {
+    margin: 70px auto 0; max-width: 880px;
+    border-radius: 28px; overflow: hidden;
+    background: #0a0a0a;
+    box-shadow: 0 40px 100px -30px rgba(0,0,0,0.35);
+    aspect-ratio: 16 / 9;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-visual .mock {
+    text-align: center; color: #fff; padding: 40px;
+  }
+  .hero-visual .mock .big-num {
+    font-size: clamp(48px, 9vw, 96px); font-weight: 800; letter-spacing: -0.04em;
+    background: linear-gradient(120deg, #fff, #8ab4f8);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-visual .mock .lbl { color: #a1a1a6; font-size: 17px; margin-top: 8px; }
+
+  /* ---------- STATS (dark) ---------- */
+  .stats { background: var(--black); color: #fff; padding: 90px 0; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; text-align: center; }
+  .stat .num { font-size: clamp(40px, 6vw, 64px); font-weight: 800; letter-spacing: -0.04em; }
+  .stat .num .grad-g {
+    background: linear-gradient(120deg, #8ab4f8, #34A853);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat .desc { color: #a1a1a6; font-size: 16px; margin-top: 8px; letter-spacing: -0.01em; }
+  @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section { padding: 110px 0; }
+  .section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+  .section-head .tag { font-size: 14px; font-weight: 600; color: var(--blue); letter-spacing: 0.02em; }
+  .section-head h2 {
+    font-size: clamp(32px, 5.5vw, 56px); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.08; margin: 12px 0 18px;
+  }
+  .section-head p { font-size: clamp(17px, 2.2vw, 21px); color: var(--gray); letter-spacing: -0.015em; }
+
+  /* ---------- PROBLEM ---------- */
+  .problem { background: var(--bg-gray); }
+  .prob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .prob-card {
+    background: #fff; border-radius: var(--radius); padding: 36px 30px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .prob-card .ic {
+    width: 46px; height: 46px; border-radius: 12px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff0f0;
+  }
+  .prob-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .prob-card p { color: var(--gray); font-size: 16px; }
+  @media (max-width: 800px) { .prob-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- FEATURES alternating ---------- */
+  .feature-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center;
+    margin-bottom: 120px;
+  }
+  .feature-row:last-child { margin-bottom: 0; }
+  .feature-row.reverse .f-text { order: 2; }
+  .f-text .step { font-size: 14px; font-weight: 600; color: var(--blue); letter-spacing: 0.04em; text-transform: uppercase; }
+  .f-text h3 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin: 14px 0 18px; }
+  .f-text p { font-size: 18px; color: var(--gray); letter-spacing: -0.015em; }
+  .f-text ul { list-style: none; margin-top: 22px; }
+  .f-text li { font-size: 16px; padding: 9px 0 9px 30px; position: relative; color: var(--black); }
+  .f-text li::before {
+    content: ""; position: absolute; left: 0; top: 13px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/10px no-repeat;
+  }
+  .f-visual {
+    border-radius: 26px; aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; position: relative; overflow: hidden;
+  }
+  .f-visual .v-inner { text-align: center; padding: 30px; z-index: 2; }
+  .f-visual .v-inner .vbig { font-size: clamp(40px, 6vw, 68px); letter-spacing: -0.04em; }
+  .f-visual .v-inner .vsmall { font-size: 16px; font-weight: 500; opacity: 0.85; margin-top: 8px; }
+  .fv1 { background: linear-gradient(135deg, #4285F4, #0a3d91); }
+  .fv2 { background: linear-gradient(135deg, #34A853, #0b5e2a); }
+  .fv3 { background: linear-gradient(135deg, #1d1d1f, #3a3a3c); }
+  @media (max-width: 800px) {
+    .feature-row { grid-template-columns: 1fr; gap: 32px; margin-bottom: 80px; }
+    .feature-row.reverse .f-text { order: 0; }
+  }
+
+  /* ---------- SHOWCASE dark ---------- */
+  .showcase { background: var(--black); color: #fff; text-align: center; padding: 140px 0; }
+  .showcase h2 {
+    font-size: clamp(36px, 7vw, 88px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.04;
+    max-width: 900px; margin: 0 auto;
+  }
+  .showcase h2 .dim { color: #6e6e73; }
+  .showcase p { color: #a1a1a6; font-size: clamp(18px, 2.4vw, 24px); margin: 26px auto 0; max-width: 600px; }
+
+  /* ---------- AUDIENCE ---------- */
+  .aud-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .aud-card {
+    background: var(--bg-gray); border-radius: 18px; padding: 30px 22px; text-align: center;
+    transition: transform 0.3s var(--ease), background 0.3s;
+  }
+  .aud-card:hover { transform: translateY(-6px); background: #ececef; }
+  .aud-card .ai { width: 48px; height: 48px; margin: 0 auto 14px; color: var(--blue); }
+  .aud-card h4 { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+  @media (max-width: 800px) { .aud-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- PRICING ---------- */
+  .pricing { background: var(--bg-gray); }
+  .price-card {
+    max-width: 540px; margin: 0 auto; background: #fff; border-radius: 28px;
+    padding: 50px 44px; text-align: center; border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 30px 70px -40px rgba(0,0,0,0.25);
+  }
+  .price-badge {
+    display: inline-block; background: #fff0e6; color: #c2410c;
+    font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 980px; margin-bottom: 22px;
+  }
+  .price-card h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+  .price-old { color: var(--gray-light); text-decoration: line-through; font-size: 19px; margin-top: 18px; }
+  .price-now { font-size: 60px; font-weight: 800; letter-spacing: -0.04em; margin: 4px 0; }
+  .price-now small { font-size: 22px; font-weight: 600; color: var(--gray); }
+  .price-sub { color: var(--gray); font-size: 15px; }
+  .price-list { list-style: none; text-align: left; margin: 32px 0; }
+  .price-list li { font-size: 16px; padding: 11px 0 11px 30px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .price-list li:last-child { border-bottom: none; }
+  .price-list li::before {
+    content: ""; position: absolute; left: 0; top: 15px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
+  }
+  .price-card .btn-primary { width: 100%; font-size: 18px; padding: 16px; }
+  .guarantee { margin-top: 18px; font-size: 13px; color: var(--gray-light); }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .test-card { background: var(--bg-gray); border-radius: var(--radius); padding: 34px 30px; }
+  .test-card .quote { font-size: 17px; letter-spacing: -0.015em; line-height: 1.5; margin-bottom: 22px; }
+  .test-author { display: flex; align-items: center; gap: 12px; }
+  .test-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #4285F4, #34A853); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
+  .test-author .name { font-weight: 700; font-size: 15px; }
+  .test-author .role { color: var(--gray); font-size: 13px; }
+  @media (max-width: 800px) { .test-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- FAQ ---------- */
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
+  .faq-q {
+    width: 100%; background: none; border: none; text-align: left; cursor: pointer;
+    padding: 26px 0; font-size: 19px; font-weight: 600; letter-spacing: -0.02em;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--black);
+  }
+  .faq-q .plus { font-size: 26px; font-weight: 400; color: var(--blue); transition: transform 0.3s var(--ease); flex-shrink: 0; }
+  .faq-item.open .faq-q .plus { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease); }
+  .faq-a p { padding: 0 0 26px; color: var(--gray); font-size: 17px; line-height: 1.6; }
+
+  /* ---------- FINAL CTA ---------- */
+  .final {
+    background: radial-gradient(120% 120% at 50% 0%, #0a3d91 0%, #1d1d1f 70%);
+    color: #fff; text-align: center; padding: 130px 0;
+  }
+  .final h2 { font-size: clamp(34px, 6vw, 68px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; margin-bottom: 20px; }
+  .final p { color: #c7c7cc; font-size: clamp(17px, 2.2vw, 21px); margin-bottom: 38px; }
+  .final .btn-primary { background: #fff; color: var(--blue); }
+  .final .btn-primary:hover { background: #f0f0f0; }
+
+  /* ---------- FOOTER ---------- */
+  footer { background: #f5f5f7; padding: 50px 0; color: var(--gray); font-size: 13px; }
+  footer .wrap-wide { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer a { color: var(--gray); text-decoration: none; }
+  footer a:hover { color: var(--black); }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap-wide">
+    <div class="logo">Domínio<span>Ads</span></div>
+    <div class="nav-links">
+      <a href="#metodo">Método</a>
+      <a href="#para-quem">Para quem é</a>
+      <a href="#preco">Investimento</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="#preco" class="nav-cta">Garantir vaga</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow reveal">Turma 2026 · Vagas limitadas</span>
+    <h1 class="reveal">Seu telefone tocando<br>com <span class="grad">cliente pronto</span><br>para fechar.</h1>
+    <p class="sub reveal">O curso definitivo de Google Ads 2026 para prestadores de serviço que cansaram de depender de indicação e querem demanda previsível todos os dias.</p>
+    <div class="btn-row reveal">
+      <a href="#preco" class="btn btn-primary">Quero gerar clientes &rarr;</a>
+      <a href="#metodo" class="btn btn-ghost">Ver como funciona</a>
+    </div>
+    <p class="hero-note reveal">Acesso vitalício · Atualizações 2026 · Garantia de 7 dias</p>
+
+    <div class="hero-visual reveal">
+      <div class="mock">
+        <div class="big-num">R$ 4,80</div>
+        <div class="lbl">custo médio por orçamento qualificado &mdash; nichos de serviço</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="num"><span class="grad-g">8x</span></div><div class="desc">mais orçamentos no primeiro mês de campanha</div></div>
+      <div class="stat reveal"><div class="num"><span class="grad-g">+2.300</span></div><div class="desc">prestadores de serviço já aplicaram o método</div></div>
+      <div class="stat reveal"><div class="num"><span class="grad-g">72h</span></div><div class="desc">do zero à primeira campanha rodando</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <span class="tag">A realidade hoje</span>
+      <h2>Trabalho bom não basta se ninguém te encontra.</h2>
+      <p>Você é excelente no que faz. O problema nunca foi o serviço &mdash; é a falta de clientes batendo na porta de forma constante.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card reveal">
+        <div class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        </div>
+        <h3>Depende de indicação</h3>
+        <p>Um mês cheio, outro vazio. Sem previsibilidade, é impossível planejar ou crescer com tranquilidade.</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Dinheiro jogado fora</h3>
+        <p>Já tentou impulsionar post ou criou campanha no escuro e só viu o saldo cair sem nenhum cliente entrar.</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Refém de agência</h3>
+        <p>Paga caro, não entende o relatório e fica sem saber se o investimento realmente está dando retorno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="metodo">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <span class="tag">O método D.A.</span>
+      <h2>Três passos. Campanhas que vendem.</h2>
+      <p>Um sistema direto, sem jargão de marketing, pensado para quem precisa de cliente &mdash; não de teoria.</p>
+    </div>
+
+    <div class="feature-row">
+      <div class="f-text reveal">
+        <span class="step">Passo 01</span>
+        <h3>Apareça para quem já está procurando</h3>
+        <p>Aprenda a estruturar campanhas de Pesquisa para captar exatamente o cliente no momento em que ele digita "encanador perto de mim".</p>
+        <ul>
+          <li>Pesquisa de palavras-chave do seu nicho de serviço</li>
+          <li>Estrutura de conta que o Google premia em 2026</li>
+          <li>Segmentação por bairro, cidade e raio de atendimento</li>
+        </ul>
+      </div>
+      <div class="f-visual fv1 reveal"><div class="v-inner"><div class="vbig">#1</div><div class="vsmall">posição na busca local</div></div></div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="f-text reveal">
+        <span class="step">Passo 02</span>
+        <h3>Anúncios que fazem o cliente ligar</h3>
+        <p>Copy, extensões e páginas que transformam o clique em telefone tocando e WhatsApp apitando &mdash; com modelos prontos para copiar.</p>
+        <ul>
+          <li>Fórmulas de anúncio testadas para serviços</li>
+          <li>Página de captação que converte sem precisar de site</li>
+          <li>Botão de ligação e WhatsApp direto do anúncio</li>
+        </ul>
+      </div>
+      <div class="f-visual fv2 reveal"><div class="v-inner"><div class="vbig">+340%</div><div class="vsmall">taxa de contato vs. impulsionar post</div></div></div>
+    </div>
+
+    <div class="feature-row">
+      <div class="f-text reveal">
+        <span class="step">Passo 03</span>
+        <h3>Escale gastando menos com IA</h3>
+        <p>Use as automações e a IA do Google de 2026 a seu favor para baixar o custo por cliente e crescer sem aumentar o orçamento no chute.</p>
+        <ul>
+          <li>Lances inteligentes e Performance Max sem desperdício</li>
+          <li>Leitura simples de relatórios: o que cortar e o que dobrar</li>
+          <li>Rotina semanal de 30 min para manter tudo no azul</li>
+        </ul>
+      </div>
+      <div class="f-visual fv3 reveal"><div class="v-inner"><div class="vbig">-58%</div><div class="vsmall">custo por orçamento em 60 dias</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="showcase">
+  <div class="wrap">
+    <h2 class="reveal">Pare de esperar o telefone tocar. <span class="dim">Faça ele tocar.</span></h2>
+    <p class="reveal">Em 2026, quem domina o Google Ads não disputa preço. Domina a região.</p>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="para-quem">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <span class="tag">Para quem é</span>
+      <h2>Feito para quem presta serviço.</h2>
+      <p>Se você vende seu tempo, sua mão de obra ou sua expertise local, esse curso foi desenhado para você.</p>
+    </div>
+    <div class="aud-grid">
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 2.8 2.8l6-6a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2 2.6-2.6Z"/></svg>
+        <h4>Encanadores & Eletricistas</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h.01M9 13h.01M9 17h.01"/></svg>
+        <h4>Advogados & Contadores</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2a3 3 0 0 0-3 3c0 2 3 4 3 4s3-2 3-4a3 3 0 0 0-3-3ZM5 22c0-4 3-7 7-7s7 3 7 7"/></svg>
+        <h4>Dentistas & Clínicas</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 9 12 3l9 6v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+        <h4>Reformas & Pintura</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 18 3 22l4-2M14.5 4.5l5 5L8 21l-5 1 1-5L15.5 5.5ZM13 6l5 5"/></svg>
+        <h4>Estética & Beleza</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m3 11 18-5v12L3 14v-3ZM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        <h4>Personal & Coaches</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M19 17h2v-6l-3-4h-4M2 17h11M14 17V5H2v12M5 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM17 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+        <h4>Autônomos & Frete</h4>
+      </div>
+      <div class="aud-card reveal">
+        <svg class="ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5a2.5 2.5 0 0 1 5 0c0 2.5-3 2-3 5"/></svg>
+        <h4>E qualquer serviço local</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="preco" class="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Investimento</span>
+      <h2>Um cliente paga o curso inteiro.</h2>
+      <p>O retorno de um único serviço fechado já cobre o que você investe hoje. O resto é lucro.</p>
+    </div>
+    <div class="price-card reveal">
+      <span class="price-badge">Lote de lançamento &middot; Turma 2026</span>
+      <h3>Domínio Ads 2026 &mdash; Completo</h3>
+      <div class="price-old">de R$ 1.997</div>
+      <div class="price-now"><small>12&times; R$</small> 49<small>,70</small></div>
+      <div class="price-sub">ou R$ 497 à vista</div>
+      <ul class="price-list">
+        <li>Curso completo passo a passo (método D.A.)</li>
+        <li>Modelos de anúncio e página de captação prontos</li>
+        <li>Planilha de palavras-chave por nicho de serviço</li>
+        <li>Aulas de IA e Performance Max 2026</li>
+        <li>Comunidade de prestadores + suporte</li>
+        <li>Acesso vitalício e atualizações inclusas</li>
+      </ul>
+      <a href="#" class="btn btn-primary">Garantir minha vaga agora</a>
+      <p class="guarantee">Garantia incondicional de 7 dias. Não gostou, devolvemos 100%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <span class="tag">Resultados reais</span>
+      <h2>Quem aplicou, encheu a agenda.</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <p class="quote">"Em três semanas saí de 2 orçamentos por mês para 5 por dia. Parei de depender de indicação."</p>
+        <div class="test-author"><div class="test-avatar">RC</div><div><div class="name">Ricardo Campos</div><div class="role">Encanador · Campinas</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <p class="quote">"Eu pagava agência R$ 1.500 e não via retorno. Hoje rodo sozinho com metade do orçamento e o dobro de clientes."</p>
+        <div class="test-author"><div class="test-avatar">AM</div><div><div class="name">Ana Martins</div><div class="role">Esteticista · Curitiba</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <p class="quote">"Achei que Google Ads era complicado. O passo a passo é tão direto que montei a campanha no fim de semana."</p>
+        <div class="test-author"><div class="test-avatar">JF</div><div><div class="name">Jorge Freitas</div><div class="role">Advogado · Salvador</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Dúvidas frequentes</span>
+      <h2>Antes de decidir.</h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item">
+        <button class="faq-q">Nunca mexi com anúncios. Consigo acompanhar?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Sim. O curso parte do absoluto zero, com cada clique mostrado na tela. Se você sabe usar o WhatsApp, consegue montar sua primeira campanha.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quanto preciso investir em anúncios?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Você pode começar com R$ 15 a R$ 30 por dia. Ensinamos a escalar o orçamento só depois que a campanha já estiver trazendo cliente com lucro.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Funciona para o meu tipo de serviço?<span class="plus">+</span></button>
+        <div class="faq-a"><p>O método é feito para serviços locais de qualquer segmento &mdash; da reforma à advocacia. As estratégias se adaptam ao seu nicho e à sua região.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Preciso ter site para anunciar?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Não. Você recebe modelos de página de captação prontos e aprende a receber contato direto por ligação e WhatsApp, mesmo sem site.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">E se eu não gostar?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Você tem 7 dias de garantia incondicional. Se não fizer sentido, é só pedir o reembolso e devolvemos 100% do valor, sem perguntas.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">2026 é o ano de dominar<br>a sua região.</h2>
+    <p class="reveal">Entre para a turma e transforme o Google na sua máquina de clientes.</p>
+    <div class="btn-row reveal"><a href="#preco" class="btn btn-primary">Garantir minha vaga &rarr;</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap-wide">
+    <div>© 2026 DomínioAds · Página de demonstração (teste de design)</div>
+    <div style="display:flex; gap:24px;">
+      <a href="#">Termos</a><a href="#">Privacidade</a><a href="#">Contato</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 70 + 'ms';
+    io.observe(el);
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const ans = btn.nextElementSibling;
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach((o) => {
+        o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!open) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+    });
+  });
+</script>
+</body>
+</html>
