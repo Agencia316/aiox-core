@@ -27,6 +27,12 @@ docker compose up --build   # primeira vez: ~5 min (build do Chromium + deps)
 
 Pronto. Abra **http://localhost:3100**. A pasta `data/` (SQLite) e `sessions/` (login do WhatsApp) ficam montadas via volume — sobrevivem a `docker compose down`.
 
+**Quer ver dados de exemplo antes de conectar o WhatsApp?** Com o container rodando, em outro terminal:
+```bash
+docker compose exec whatsapp-crm npm run seed:demo
+```
+Cria 5 conversas, 4 cards no Kanban e 2 agentes (1 OpenAI + 1 Gemini). Idempotente — pode rodar quantas vezes quiser. Útil pra ver o dashboard "preenchido" antes de parear seu número.
+
 Para parar:
 ```bash
 docker compose down         # mantém dados
@@ -41,6 +47,7 @@ npm install                 # ~2-3 min (baixa Chromium do Puppeteer)
 cp .env.example .env
 # preencha OPENAI_API_KEY e/ou GEMINI_API_KEY
 npm run migrate
+npm run seed:demo           # (opcional) popula com dados de exemplo
 npm run dev                 # http://localhost:3100
 ```
 
