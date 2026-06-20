@@ -1,0 +1,33 @@
+# Ambiente de desenvolvimento local do Nexus.
+#   docker compose up -d
+# Postgres expõe 5432, Redis 6379. Evolution API (WhatsApp) pode ser adicionada
+# quando a instância local for necessária (ver §9/§11 do briefing).
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexus-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nexus
+    ports:
+      - '5432:5432'
+    volumes:
+      - nexus_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d nexus']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: nexus-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - nexus_redisdata:/data
+
+volumes:
+  nexus_pgdata:
+  nexus_redisdata:
