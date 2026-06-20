@@ -1,0 +1,55 @@
+/**
+ * DTOs de API — formato estável consumido pelo frontend, desacoplado da linha
+ * do banco (datas como ISO string, valores monetários como number).
+ */
+
+export interface ProcessoDTO {
+  id: string;
+  cnj: string;
+  clienteNome: string;
+  area: string;
+  tribunal: string;
+  status: 'ativo' | 'suspenso' | 'arquivado' | 'baixado';
+  fase: 'conhecimento' | 'recursal' | 'execucao' | 'cumprimento';
+  valorCausa: number | null;
+  createdAt: string;
+}
+
+export interface MovimentacaoDTO {
+  id: string;
+  processoId: string;
+  data: string;
+  titulo: string;
+  resumoIa: string | null;
+}
+
+export type LeadColuna = 'novo' | 'qualificacao' | 'proposta' | 'negociacao' | 'ganho' | 'perdido';
+
+export interface LeadDTO {
+  id: string;
+  nome: string;
+  telefone: string;
+  area: string;
+  score: number;
+  colunaFunil: LeadColuna;
+  origem: 'whatsapp' | 'indicacao' | 'site' | 'anuncio' | 'organico';
+  resumoIa: string | null;
+}
+
+export interface DashboardKpis {
+  processosAtivos: number;
+  prazosUrgentes: number;
+  leadsNovos: number;
+  receitaMes: number;
+}
+
+export interface FunilColuna {
+  coluna: LeadColuna;
+  total: number;
+}
+
+export interface DashboardDTO {
+  kpis: DashboardKpis;
+  funil: FunilColuna[];
+  atividadeRecente: MovimentacaoDTO[];
+}

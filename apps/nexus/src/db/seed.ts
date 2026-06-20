@@ -11,11 +11,8 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 
 import { createAdminPool } from '@/db/client';
+import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
 import * as schema from '@/db/schema';
-
-// UUIDs fixos → seed reprodutível, fácil de referenciar em testes/dev.
-export const OFFICE_ALMEIDA = '11111111-1111-1111-1111-111111111111';
-export const OFFICE_NAVES = '22222222-2222-2222-2222-222222222222';
 
 async function main(): Promise<void> {
   const pool = createAdminPool();
