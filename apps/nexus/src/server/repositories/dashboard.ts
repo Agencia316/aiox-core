@@ -6,7 +6,7 @@ import { and, count, desc, eq, gte, sql } from 'drizzle-orm';
 
 import { cobrancas, leads, movimentacoes, prazos, processos } from '@/db/schema';
 import { withTenant } from '@/db/tenant';
-import { useMocks } from '@/lib/env';
+import { isMockMode } from '@/lib/env';
 import type { DashboardDTO, FunilColuna, LeadColuna } from '@/server/dto';
 import {
   LEADS_MOCK,
@@ -30,7 +30,7 @@ function buildFunil(counts: Record<string, number>): FunilColuna[] {
 }
 
 export async function getDashboard(officeId: string): Promise<DashboardDTO> {
-  if (useMocks()) {
+  if (isMockMode()) {
     const procs = PROCESSOS_MOCK[officeId] ?? [];
     const lds = LEADS_MOCK[officeId] ?? [];
     const movs = MOVIMENTACOES_MOCK[officeId] ?? [];

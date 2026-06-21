@@ -13,8 +13,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 const PUBLIC_PATHS = ['/login', '/api/auth'];
 
 export function middleware(request: NextRequest): NextResponse {
-  const useMocks = (process.env.NEXUS_USE_MOCKS ?? 'true').toLowerCase() !== 'false';
-  if (useMocks) {
+  const isMockMode = (process.env.NEXUS_USE_MOCKS ?? 'true').toLowerCase() !== 'false';
+  if (isMockMode) {
     return NextResponse.next();
   }
 

@@ -6,12 +6,12 @@ import { desc } from 'drizzle-orm';
 
 import { processos } from '@/db/schema';
 import { withTenant } from '@/db/tenant';
-import { useMocks } from '@/lib/env';
+import { isMockMode } from '@/lib/env';
 import type { ProcessoDTO } from '@/server/dto';
 import { PROCESSOS_MOCK } from '@/server/mocks/fixtures';
 
 export async function listProcessos(officeId: string): Promise<ProcessoDTO[]> {
-  if (useMocks()) {
+  if (isMockMode()) {
     return PROCESSOS_MOCK[officeId] ?? [];
   }
 

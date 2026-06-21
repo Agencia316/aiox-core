@@ -5,12 +5,12 @@ import { desc } from 'drizzle-orm';
 
 import { leads } from '@/db/schema';
 import { withTenant } from '@/db/tenant';
-import { useMocks } from '@/lib/env';
+import { isMockMode } from '@/lib/env';
 import type { LeadDTO } from '@/server/dto';
 import { LEADS_MOCK } from '@/server/mocks/fixtures';
 
 export async function listLeads(officeId: string): Promise<LeadDTO[]> {
-  if (useMocks()) {
+  if (isMockMode()) {
     return LEADS_MOCK[officeId] ?? [];
   }
 

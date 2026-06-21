@@ -4,7 +4,7 @@
  */
 
 /** Quando true, repositórios e integrações usam fixtures/mocks (sem APIs reais). */
-export function useMocks(): boolean {
+export function isMockMode(): boolean {
   // Default true: o ambiente de dev/demo roda sem Postgres nem credenciais.
   return (process.env.NEXUS_USE_MOCKS ?? 'true').toLowerCase() !== 'false';
 }

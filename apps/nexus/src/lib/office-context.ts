@@ -9,7 +9,7 @@
  * (repositórios → withTenant → RLS) confia nele.
  */
 import { DEMO_OFFICE_ID } from '@/db/ids';
-import { useMocks } from '@/lib/env';
+import { isMockMode } from '@/lib/env';
 
 export interface OfficeContext {
   officeId: string;
@@ -17,7 +17,7 @@ export interface OfficeContext {
 }
 
 export async function getOfficeContext(headers: Headers): Promise<OfficeContext | null> {
-  if (useMocks()) {
+  if (isMockMode()) {
     return { officeId: DEMO_OFFICE_ID, userId: 'demo-user' };
   }
 

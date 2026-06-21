@@ -5,12 +5,12 @@ import { desc } from 'drizzle-orm';
 
 import { movimentacoes } from '@/db/schema';
 import { withTenant } from '@/db/tenant';
-import { useMocks } from '@/lib/env';
+import { isMockMode } from '@/lib/env';
 import type { MovimentacaoDTO } from '@/server/dto';
 import { MOVIMENTACOES_MOCK } from '@/server/mocks/fixtures';
 
 export async function listMovimentacoes(officeId: string, limit = 20): Promise<MovimentacaoDTO[]> {
-  if (useMocks()) {
+  if (isMockMode()) {
     return (MOVIMENTACOES_MOCK[officeId] ?? []).slice(0, limit);
   }
 
