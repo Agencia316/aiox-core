@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
+    "db:migrate:auth": "tsx src/db/migrate-auth.ts",
     "db:seed": "tsx src/db/seed.ts",
+    "db:seed:auth": "tsx src/db/seed-auth.ts",
     "db:studio": "drizzle-kit studio",
     "test": "vitest run",
     "test:rls": "vitest run src/db/__tests__/rls-isolation.test.ts"

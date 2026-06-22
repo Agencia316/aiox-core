@@ -1,16 +1,34 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import { Icon } from '@/components/shell/icons';
+import { signOut } from '@/lib/auth-client';
 import { MODULES } from '@/lib/modules';
 
 export interface HeaderProps {
   usuarioNome: string;
+  podeSair: boolean;
 }
 
-export function Header({ usuarioNome }: HeaderProps) {
+export function Header({ usuarioNome, podeSair }: HeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [saindo, startSaindo] = useTransition();
+
+  const sair = () => {
+    startSaindo(async () => {
+      try {
+        await signOut();
+      } catch {
+        // ignora — segue para o login de qualquer forma
+      }
+      router.push('/login');
+      router.refresh();
+    });
+  };
+
   const current = MODULES.find((m) => pathname === m.href || pathname.startsWith(`${m.href}/`));
   const iniciais = usuarioNome
     .split(' ')
@@ -41,9 +59,23 @@ export function Header({ usuarioNome }: HeaderProps) {
 
         {/* Usuário */}
         <div className="flex items-center gap-2.5 pl-1">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand/20 text-sm font-semibold text-brand">
+          <span
+            title={usuarioNome}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-brand/20 text-sm font-semibold text-brand"
+          >
             {iniciais}
           </span>
+          {podeSair ? (
+            <button
+              type="button"
+              onClick={sair}
+              disabled={saindo}
+              title="Sair"
+              className="rounded-lg border border-border bg-elevated px-2.5 py-1.5 text-xs text-muted transition-colors hover:text-ink disabled:opacity-50"
+            >
+              {saindo ? '…' : 'Sair'}
+            </button>
+          ) : null}
         </div>
       </div>
     </header>

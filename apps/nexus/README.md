@@ -37,8 +37,10 @@ cp .env.example .env.local        # ajuste credenciais
 docker compose up -d              # Postgres + Redis
 npm install
 npm run db:migrate                # cria schema + RLS (roda como owner)
+npm run db:migrate:auth           # tabelas do Better Auth (user/session/...)
 npm run db:seed                   # popula Almeida & Rocha + Naves
-npm run dev                       # http://localhost:3000
+npm run db:seed:auth              # usuários de login (senha demo: nexus1234)
+NEXUS_USE_MOCKS=false npm run dev # http://localhost:3000 → /login
 ```
 
 ## Dados de seed
