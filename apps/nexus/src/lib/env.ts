@@ -9,7 +9,12 @@ export function isMockMode(): boolean {
   return (process.env.NEXUS_USE_MOCKS ?? 'true').toLowerCase() !== 'false';
 }
 
-/** Modelo Claude default para o assistente Caio. */
+/** Modelo Claude default para o assistente Caio (redação — alta qualidade). */
 export function aiModel(): string {
   return process.env.NEXUS_AI_MODEL ?? 'claude-opus-4-5';
+}
+
+/** Modelo Claude para agentes de alto volume/baixo custo (recepção, resumo). */
+export function aiModelFast(): string {
+  return process.env.NEXUS_AI_MODEL_FAST ?? 'claude-haiku-4-5-20251001';
 }

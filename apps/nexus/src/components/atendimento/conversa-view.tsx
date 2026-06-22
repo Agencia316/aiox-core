@@ -1,4 +1,4 @@
-import { Icon } from '@/components/shell/icons';
+import { Composer } from '@/components/atendimento/composer';
 import { formatData, formatHora } from '@/lib/format';
 import type { ConversaDTO, MensagemWA } from '@/server/dto';
 
@@ -36,27 +36,8 @@ export function ConversaView({ conversa }: ConversaViewProps) {
         ))}
       </ol>
 
-      {/* Composer (stub — envio real requer Evolution + Caio com Claude API) */}
-      <footer className="border-t border-border bg-surface p-4">
-        <div className="flex items-center gap-2">
-          <input
-            type="text"
-            placeholder="Caio assume — envio real requer Evolution API + chave Anthropic"
-            disabled
-            className="flex-1 rounded-lg border border-border bg-elevated px-4 py-2.5 text-sm text-muted placeholder:text-muted focus:outline-none"
-          />
-          <button
-            type="button"
-            disabled
-            className="flex items-center gap-1.5 rounded-lg bg-brand/30 px-4 py-2.5 text-sm font-medium text-muted"
-          >
-            <Icon name="spark" size={14} /> Enviar
-          </button>
-        </div>
-        <p className="mt-2 text-xs text-muted">
-          Em produção, o Agente Recepção (Caio) responde 24h via Evolution API.
-        </p>
-      </footer>
+      {/* Composer ativo — enviar manual ou pedir resposta ao Caio */}
+      <Composer leadId={conversa.leadId} />
     </section>
   );
 }

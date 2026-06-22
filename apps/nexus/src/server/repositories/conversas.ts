@@ -70,6 +70,38 @@ export async function listConversas(officeId: string): Promise<ConversaResumo[]>
   });
 }
 
+/**
+ * Acrescenta uma mensagem à conversa de um lead. Real → read-modify-write do
+ * jsonb via withTenant (RLS); mock → push na fixture.
+ */
+export async function appendMensagem(
+  officeId: string,
+  leadId: string,
+  mensagem: MensagemWA,
+): Promise<void> {
+  if (isMockMode()) {
+    const conversa = (CONVERSAS_MOCK[officeId] ?? []).find((c) => c.leadId === leadId);
+    if (!conversa) {
+      throw new Error('Conversa não encontrada para o lead');
+    }
+    conversa.mensagens.push(mensagem);
+    return;
+  }
+
+  await withTenant(officeId, async (tx) => {
+    const [row] = await tx
+      .select({ id: conversasWa.id, mensagens: conversasWa.mensagens })
+      .from(conversasWa)
+      .where(eq(conversasWa.leadId, leadId))
+      .limit(1);
+    if (!row) {
+      throw new Error('Conversa não encontrada para o lead');
+    }
+    const atualizadas = [...(row.mensagens as MensagemWA[]), mensagem];
+    await tx.update(conversasWa).set({ mensagens: atualizadas }).where(eq(conversasWa.id, row.id));
+  });
+}
+
 export async function getConversaByLead(
   officeId: string,
   leadId: string,
