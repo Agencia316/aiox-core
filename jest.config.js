@@ -17,6 +17,8 @@ module.exports = {
     // Pro submodule tests — run via pro-integration.yml CI workflow, not local npm test
     // Use anchored regex to only match the pro/ submodule dir, not tests/pro/
     '<rootDir>/pro/',
+    // Standalone app with its own dependencies & jest config
+    '<rootDir>/apps/whatsapp-crm/',
     // Playwright e2e tests (use ESM imports, run with Playwright not Jest)
     'tools/quality-dashboard/tests/e2e/',
     // Windows-specific tests (only run on Windows CI)

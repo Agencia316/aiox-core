@@ -1,0 +1,12 @@
+node_modules/
+data/
+sessions/
+.wwebjs_auth/
+.wwebjs_cache/
+*.log
+.env
+.env.local
+coverage/
+.jest-cache/
+.next/
+next-env.d.ts
