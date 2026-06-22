@@ -5,12 +5,14 @@
  */
 import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
 import type {
+  CobrancaDTO,
   ConversaDTO,
   DocumentoDTO,
   LeadDTO,
   MovimentacaoDTO,
   PrazoDTO,
   ProcessoDTO,
+  UsuarioDTO,
 } from '@/server/dto';
 
 export const PROCESSOS_MOCK: Record<string, ProcessoDTO[]> = {
@@ -358,6 +360,54 @@ Por este instrumento, o outorgante nomeia e constitui o outorgado seu bastante p
     },
   ],
   [OFFICE_NAVES]: [],
+};
+
+/** Usuários (seats) por escritório. */
+export const USUARIOS_MOCK: Record<string, UsuarioDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'u-almeida-1',
+      nome: 'Dra. Carolina Almeida',
+      email: 'carolina@almeidarocha.adv.br',
+      role: 'owner',
+      createdAt: '2026-01-10T12:00:00.000Z',
+    },
+    {
+      id: 'u-almeida-2',
+      nome: 'Dr. Marcelo Rocha',
+      email: 'marcelo@almeidarocha.adv.br',
+      role: 'advogado',
+      createdAt: '2026-01-12T12:00:00.000Z',
+    },
+    {
+      id: 'u-almeida-3',
+      nome: 'Juliana Prado',
+      email: 'juliana@almeidarocha.adv.br',
+      role: 'secretaria',
+      createdAt: '2026-02-01T12:00:00.000Z',
+    },
+  ],
+  [OFFICE_NAVES]: [
+    {
+      id: 'u-naves-1',
+      nome: 'Dr. Henrique Naves',
+      email: 'henrique@naves.adv.br',
+      role: 'owner',
+      createdAt: '2026-03-01T12:00:00.000Z',
+    },
+  ],
+};
+
+/** Histórico de cobranças (Asaas) por escritório. */
+export const COBRANCAS_MOCK: Record<string, CobrancaDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    { id: 'cob-almeida-3', valor: 679, status: 'pago', createdAt: '2026-06-05T03:00:00.000Z' },
+    { id: 'cob-almeida-2', valor: 679, status: 'pago', createdAt: '2026-05-05T03:00:00.000Z' },
+    { id: 'cob-almeida-1', valor: 679, status: 'pago', createdAt: '2026-04-05T03:00:00.000Z' },
+  ],
+  [OFFICE_NAVES]: [
+    { id: 'cob-naves-1', valor: 379, status: 'pendente', createdAt: '2026-06-05T03:00:00.000Z' },
+  ],
 };
 
 export const PRAZOS_MOCK: Record<string, PrazoDTO[]> = {

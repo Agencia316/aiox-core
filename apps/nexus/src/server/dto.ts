@@ -121,3 +121,22 @@ export interface ClienteRisco {
   fontes: string[];
   consultadoEm: string;
 }
+
+export type UserRole = 'owner' | 'admin' | 'advogado' | 'secretaria';
+
+export interface UsuarioDTO {
+  id: string;
+  nome: string;
+  email: string;
+  role: UserRole;
+  createdAt: string;
+}
+
+export type CobrancaStatus = 'pendente' | 'pago' | 'vencido' | 'cancelado';
+
+export interface CobrancaDTO {
+  id: string;
+  valor: number;
+  status: CobrancaStatus;
+  createdAt: string;
+}

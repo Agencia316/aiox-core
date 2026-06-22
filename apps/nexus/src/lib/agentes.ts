@@ -24,6 +24,8 @@ export interface AgenteDef {
   icon: IconName;
   minPlano: Plano;
   modelo: string;
+  temperatura: number;
+  systemPrompt: string;
 }
 
 export const AGENTES: AgenteDef[] = [
@@ -36,6 +38,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'chat',
     minPlano: 'solo',
     modelo: 'claude-haiku-4-5-20251001',
+    temperatura: 0.6,
+    systemPrompt:
+      'Você é o Caio, recepcionista virtual de um escritório de advocacia. Seja cordial e objetivo. Identifique a área jurídica do problema do contato e colha os dados essenciais (nome, cidade, breve relato). Nunca prometa resultados nem dê parecer jurídico.',
   },
   {
     slug: 'qualificacao',
@@ -46,6 +51,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'funnel',
     minPlano: 'solo',
     modelo: 'claude-haiku-4-5-20251001',
+    temperatura: 0.2,
+    systemPrompt:
+      'Avalie o lead em três eixos: mérito do caso, existência de provas e urgência. Retorne um score de 0 a 100 e uma justificativa de uma frase. Seja conservador quando faltar informação.',
   },
   {
     slug: 'resumo',
@@ -56,6 +64,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'gavel',
     minPlano: 'solo',
     modelo: 'claude-haiku-4-5-20251001',
+    temperatura: 0.3,
+    systemPrompt:
+      'Receba o texto técnico de uma movimentação processual e explique em português simples o que aconteceu e qual a próxima ação esperada do advogado. Máximo duas frases.',
   },
   {
     slug: 'redator',
@@ -66,6 +77,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'doc',
     minPlano: 'solo',
     modelo: 'claude-opus-4-5',
+    temperatura: 0.4,
+    systemPrompt:
+      'Você é o Caio, assistente de redação jurídica. Gere peças processuais bem fundamentadas, citando dispositivos legais aplicáveis e usando o histórico do processo fornecido. Mantenha linguagem formal forense. Nunca invente jurisprudência.',
   },
   {
     slug: 'sdr',
@@ -76,6 +90,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'spark',
     minPlano: 'avancado',
     modelo: 'claude-haiku-4-5-20251001',
+    temperatura: 0.7,
+    systemPrompt:
+      'Você reengaja leads que pararam de responder. Seja simpático e leve, relembre o contexto do contato anterior e ofereça dois horários concretos para uma consulta. Nunca pressione.',
   },
   {
     slug: 'portal',
@@ -86,6 +103,9 @@ export const AGENTES: AgenteDef[] = [
     icon: 'portal',
     minPlano: 'essencial',
     modelo: 'claude-haiku-4-5-20251001',
+    temperatura: 0.5,
+    systemPrompt:
+      'Você atende o cliente do escritório no portal. Responda sobre andamento do processo, prazos e pagamentos usando apenas os dados do cliente autenticado. Encaminhe ao advogado quando a dúvida for jurídica.',
   },
 ];
 
