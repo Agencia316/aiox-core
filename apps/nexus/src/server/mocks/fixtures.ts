@@ -6,6 +6,7 @@
 import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
 import type {
   ConversaDTO,
+  DocumentoDTO,
   LeadDTO,
   MovimentacaoDTO,
   PrazoDTO,
@@ -279,6 +280,81 @@ export const CONVERSAS_MOCK: Record<string, ConversaDTO[]> = {
           em: '2026-06-20T09:15:40.000Z',
         },
       ],
+    },
+  ],
+  [OFFICE_NAVES]: [],
+};
+
+/**
+ * Documentos jurídicos (peças, contratos, procurações). Em produção são gerados
+ * pelo Agente Redator (Caio) e protocolados via INTIMA.AI.
+ */
+export const DOCUMENTOS_MOCK: Record<string, DocumentoDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'doc-almeida-1',
+      processoId: 'p-almeida-1',
+      titulo: 'Réplica à contestação — Madeira Verde',
+      tipo: 'peticao',
+      criadoPorIa: true,
+      createdAt: '2026-06-19T14:22:00.000Z',
+      conteudo: `EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DA __ VARA DO TRABALHO DE CAÇADOR/SC
+
+Processo nº 5001234-56.2024.8.24.0018
+
+JOSÉ DA SILVA, já qualificado nos autos da reclamação trabalhista em epígrafe, por seu procurador infrafirmado, vem, respeitosamente, à presença de Vossa Excelência, apresentar
+
+RÉPLICA À CONTESTAÇÃO
+
+apresentada pela reclamada INDÚSTRIA MADEIRA VERDE LTDA., pelos fatos e fundamentos jurídicos a seguir expostos.
+
+I — DA PRELIMINAR
+
+A reclamada alegou, em contestação, inexistência do vínculo empregatício. Tal alegação não merece prosperar, vez que os elementos probatórios constantes dos autos demonstram, de forma inequívoca, a presença dos requisitos do artigo 3º da CLT: pessoalidade, não-eventualidade, onerosidade e subordinação.
+
+II — DO MÉRITO
+
+O autor laborou para a reclamada de 14/02/2022 a 30/05/2025, totalizando 3 anos e 3 meses de prestação ininterrupta de serviços. Conforme se extrai dos depoimentos colhidos e dos documentos juntados (folhas 42-58), o reclamante cumpria jornada fixa, recebia salário mensal e exercia suas atividades sob ordens diretas do preposto da empresa.
+
+III — DOS PEDIDOS
+
+Ante o exposto, requer-se:
+  a) Seja reconhecido o vínculo empregatício no período declinado;
+  b) Sejam julgados procedentes os pedidos da inicial;
+  c) Sejam concedidos os benefícios da gratuidade da justiça.
+
+Termos em que pede deferimento.
+
+Caçador/SC, 19 de junho de 2026.
+
+Dra. Carolina Almeida
+OAB/SC 12.345`,
+    },
+    {
+      id: 'doc-almeida-2',
+      processoId: 'p-almeida-3',
+      titulo: 'Petição inicial — Cooperativa Agro',
+      tipo: 'peticao',
+      criadoPorIa: true,
+      createdAt: '2026-05-20T10:00:00.000Z',
+      conteudo: `EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO DA VARA EMPRESARIAL DA COMARCA DE CAÇADOR/SC
+
+COOPERATIVA AGRO CAÇADOR, pessoa jurídica de direito privado, vem propor a presente AÇÃO DE COBRANÇA com pedido de tutela de urgência em face de [...].`,
+    },
+    {
+      id: 'doc-almeida-3',
+      processoId: null,
+      titulo: 'Procuração ad judicia — Sr. João Batista',
+      tipo: 'procuracao',
+      criadoPorIa: false,
+      createdAt: '2026-05-08T16:30:00.000Z',
+      conteudo: `PROCURAÇÃO AD JUDICIA
+
+Outorgante: JOÃO BATISTA DOS SANTOS, CPF 000.000.000-00, residente em Caçador/SC.
+
+Outorgado: Dra. CAROLINA ALMEIDA, OAB/SC 12.345 (Almeida & Rocha Advocacia).
+
+Por este instrumento, o outorgante nomeia e constitui o outorgado seu bastante procurador para o foro em geral, com os poderes da cláusula ad judicia [...].`,
     },
   ],
   [OFFICE_NAVES]: [],

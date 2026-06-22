@@ -86,3 +86,38 @@ export interface ConversaDTO {
   leadScore: number;
   mensagens: MensagemWA[];
 }
+
+export type DocumentoTipo = 'peticao' | 'contrato' | 'procuracao' | 'parecer' | 'outro';
+
+export interface DocumentoDTO {
+  id: string;
+  processoId: string | null;
+  titulo: string;
+  conteudo: string;
+  tipo: DocumentoTipo;
+  criadoPorIa: boolean;
+  createdAt: string;
+}
+
+export interface DocumentoResumo {
+  id: string;
+  processoId: string | null;
+  titulo: string;
+  tipo: DocumentoTipo;
+  criadoPorIa: boolean;
+  createdAt: string;
+  preview: string;
+}
+
+export type RiscoNivel = 'baixo' | 'medio' | 'alto';
+
+export interface ClienteRisco {
+  nome: string;
+  documento: string;
+  tipoDocumento: 'CPF' | 'CNPJ';
+  score: number;
+  nivel: RiscoNivel;
+  apontamentos: string[];
+  fontes: string[];
+  consultadoEm: string;
+}
