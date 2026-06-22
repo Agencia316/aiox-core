@@ -61,3 +61,28 @@ export interface PrazoDTO {
   dataVencimento: string;
   urgente: boolean;
 }
+
+export interface MensagemWA {
+  de: 'lead' | 'caio';
+  texto: string;
+  em: string;
+}
+
+export interface ConversaResumo {
+  id: string;
+  leadId: string;
+  leadNome: string;
+  leadTelefone: string;
+  ultimaMensagem: MensagemWA | null;
+  totalMensagens: number;
+}
+
+export interface ConversaDTO {
+  id: string;
+  leadId: string;
+  leadNome: string;
+  leadTelefone: string;
+  leadArea: string;
+  leadScore: number;
+  mensagens: MensagemWA[];
+}

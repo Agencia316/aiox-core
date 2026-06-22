@@ -16,6 +16,12 @@ export function formatData(iso: string): string {
   return DATE.format(new Date(iso));
 }
 
+const TIME = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+export function formatHora(iso: string): string {
+  return TIME.format(new Date(iso));
+}
+
 const DATE_FULL = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
   month: '2-digit',

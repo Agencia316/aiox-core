@@ -4,7 +4,13 @@
  * multi-tenant é respeitado também no modo mock.
  */
 import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
-import type { LeadDTO, MovimentacaoDTO, PrazoDTO, ProcessoDTO } from '@/server/dto';
+import type {
+  ConversaDTO,
+  LeadDTO,
+  MovimentacaoDTO,
+  PrazoDTO,
+  ProcessoDTO,
+} from '@/server/dto';
 
 export const PROCESSOS_MOCK: Record<string, ProcessoDTO[]> = {
   [OFFICE_ALMEIDA]: [
@@ -194,6 +200,88 @@ export const RECEITA_MES_MOCK: Record<string, number> = {
 export const PRAZOS_URGENTES_MOCK: Record<string, number> = {
   [OFFICE_ALMEIDA]: 2,
   [OFFICE_NAVES]: 0,
+};
+
+/**
+ * Conversas de WhatsApp (Evolution API) por office. Em produção, mensagens
+ * chegam por webhook e o Caio responde via integrações reais. As fixtures
+ * abaixo espelham o seed para o modo demo.
+ */
+export const CONVERSAS_MOCK: Record<string, ConversaDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'conv-almeida-1',
+      leadId: 'l-almeida-1',
+      leadNome: 'Roberto Menezes',
+      leadTelefone: '+55 49 99811-2233',
+      leadArea: 'Trabalhista',
+      leadScore: 88,
+      mensagens: [
+        {
+          de: 'lead',
+          texto: 'Boa tarde, fui demitido e não recebi nada',
+          em: '2026-06-18T18:02:00.000Z',
+        },
+        {
+          de: 'caio',
+          texto:
+            'Olá, Roberto! Sinto muito. Pode me dizer há quanto tempo trabalhava na empresa?',
+          em: '2026-06-18T18:02:20.000Z',
+        },
+        { de: 'lead', texto: '3 anos e 4 meses', em: '2026-06-18T18:03:10.000Z' },
+        {
+          de: 'caio',
+          texto:
+            'Entendi. Tem carteira assinada? E o último salário, foi pago integralmente?',
+          em: '2026-06-18T18:03:35.000Z',
+        },
+        {
+          de: 'lead',
+          texto: 'Tenho sim. Faltou o último salário, 13º proporcional e férias',
+          em: '2026-06-18T18:05:01.000Z',
+        },
+        {
+          de: 'caio',
+          texto:
+            'Caso forte de verbas rescisórias. Vou agendar uma consulta com a Dra. Carolina amanhã às 14h. Confirma?',
+          em: '2026-06-18T18:05:30.000Z',
+        },
+      ],
+    },
+    {
+      id: 'conv-almeida-2',
+      leadId: 'l-almeida-2',
+      leadNome: 'Cleusa Fernandes',
+      leadTelefone: '+55 49 99744-5566',
+      leadArea: 'Previdenciário',
+      leadScore: 72,
+      mensagens: [
+        {
+          de: 'lead',
+          texto: 'Doutora, posso me aposentar por idade rural?',
+          em: '2026-06-20T09:14:00.000Z',
+        },
+        {
+          de: 'caio',
+          texto:
+            'Olá, dona Cleusa! Sou o Caio, assistente. A senhora tem mais de 55 anos e exerceu atividade rural?',
+          em: '2026-06-20T09:14:20.000Z',
+        },
+        {
+          de: 'lead',
+          texto: 'Tenho 58 e trabalhei na lavoura desde os 14',
+          em: '2026-06-20T09:15:00.000Z',
+        },
+        {
+          de: 'caio',
+          texto:
+            'Excelente — provável mérito. Precisaremos de notas de produtor, declaração do sindicato ou contratos de parceria. Tem como reunir?',
+          em: '2026-06-20T09:15:40.000Z',
+        },
+      ],
+    },
+  ],
+  [OFFICE_NAVES]: [],
 };
 
 export const PRAZOS_MOCK: Record<string, PrazoDTO[]> = {
