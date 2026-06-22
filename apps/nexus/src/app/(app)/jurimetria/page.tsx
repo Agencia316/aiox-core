@@ -1,3 +1,4 @@
+import { JuitBusca } from '@/components/jurimetria/juit-busca';
 import { Icon } from '@/components/shell/icons';
 
 export const dynamic = 'force-dynamic';
@@ -60,6 +61,9 @@ export default function JurimetriaPage() {
           plano <span className="text-ink">Elite</span>.
         </p>
       </div>
+
+      {/* JUIT Rimor — busca de jurisprudência (RAG) */}
+      <JuitBusca />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Por área */}
