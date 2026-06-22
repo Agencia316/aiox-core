@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { LoginForm } from '@/components/auth/login-form';
@@ -27,6 +28,15 @@ export default function LoginPage() {
             <LoginForm />
           </Suspense>
         )}
+
+        {!demo ? (
+          <p className="mt-6 text-xs text-muted">
+            Não tem conta?{' '}
+            <Link href="/signup" className="text-brand hover:underline">
+              Criar conta
+            </Link>
+          </p>
+        ) : null}
       </div>
     </main>
   );

@@ -10,7 +10,7 @@
  */
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/api/auth'];
+const PUBLIC_PATHS = ['/login', '/signup', '/api/auth'];
 
 export function middleware(request: NextRequest): NextResponse {
   const isMockMode = (process.env.NEXUS_USE_MOCKS ?? 'true').toLowerCase() !== 'false';
