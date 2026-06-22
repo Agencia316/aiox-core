@@ -18,6 +18,7 @@
     "test:rls": "vitest run src/db/__tests__/rls-isolation.test.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.105.0",
     "better-auth": "^1.2.0",
     "drizzle-orm": "^0.45.2",
     "next": "^14.2.35",

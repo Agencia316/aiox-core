@@ -2,11 +2,13 @@ import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import { GerarPeca } from '@/components/peticionamento/gerar-peca';
 import { TipoBadge } from '@/components/peticionamento/tipo-badge';
 import { Icon } from '@/components/shell/icons';
 import { formatData, formatHora } from '@/lib/format';
 import { getOfficeContext } from '@/lib/office-context';
 import { getDocumento, listDocumentos } from '@/server/repositories/documentos';
+import { listProcessos } from '@/server/repositories/processos';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,20 +20,27 @@ export default async function PeticionamentoPage({ searchParams }: PageProps) {
   const ctx = await getOfficeContext(headers());
   if (!ctx) redirect('/login');
 
-  const documentos = await listDocumentos(ctx.officeId);
+  const [documentos, processos] = await Promise.all([
+    listDocumentos(ctx.officeId),
+    listProcessos(ctx.officeId),
+  ]);
   const docIdSelecionado = searchParams.doc ?? documentos[0]?.id;
   const docAtivo = docIdSelecionado ? await getDocumento(ctx.officeId, docIdSelecionado) : null;
 
   const gerados = documentos.filter((d) => d.criadoPorIa).length;
+  const opcoes = processos.map((p) => ({ id: p.id, label: `${p.clienteNome} — ${p.cnj}` }));
 
   return (
     <div className="space-y-4">
-      <div>
-        <h2 className="font-display text-xl font-semibold text-ink">Peticionamento eletrônico</h2>
-        <p className="text-sm text-muted">
-          {documentos.length} peça{documentos.length === 1 ? '' : 's'} · {gerados} pelo Agente
-          Redator (Caio) · Protocolo via INTIMA.AI
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className="font-display text-xl font-semibold text-ink">Peticionamento eletrônico</h2>
+          <p className="text-sm text-muted">
+            {documentos.length} peça{documentos.length === 1 ? '' : 's'} · {gerados} pelo Agente
+            Redator (Caio) · Protocolo via INTIMA.AI
+          </p>
+        </div>
+        <GerarPeca processos={opcoes} />
       </div>
 
       <div className="nx-card grid h-[72vh] grid-cols-12 overflow-hidden p-0">
