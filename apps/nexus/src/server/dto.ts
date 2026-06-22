@@ -53,3 +53,11 @@ export interface DashboardDTO {
   funil: FunilColuna[];
   atividadeRecente: MovimentacaoDTO[];
 }
+
+export interface PrazoDTO {
+  id: string;
+  processoId: string | null;
+  titulo: string;
+  dataVencimento: string;
+  urgente: boolean;
+}

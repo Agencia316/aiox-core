@@ -4,7 +4,7 @@
  * multi-tenant é respeitado também no modo mock.
  */
 import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
-import type { LeadDTO, MovimentacaoDTO, ProcessoDTO } from '@/server/dto';
+import type { LeadDTO, MovimentacaoDTO, PrazoDTO, ProcessoDTO } from '@/server/dto';
 
 export const PROCESSOS_MOCK: Record<string, ProcessoDTO[]> = {
   [OFFICE_ALMEIDA]: [
@@ -194,4 +194,31 @@ export const RECEITA_MES_MOCK: Record<string, number> = {
 export const PRAZOS_URGENTES_MOCK: Record<string, number> = {
   [OFFICE_ALMEIDA]: 2,
   [OFFICE_NAVES]: 0,
+};
+
+export const PRAZOS_MOCK: Record<string, PrazoDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'prz-almeida-1',
+      processoId: 'p-almeida-1',
+      titulo: 'Apresentar réplica à contestação',
+      dataVencimento: '2026-06-26',
+      urgente: true,
+    },
+    {
+      id: 'prz-almeida-2',
+      processoId: 'p-almeida-1',
+      titulo: 'Arrolar testemunhas',
+      dataVencimento: '2026-07-09',
+      urgente: true,
+    },
+    {
+      id: 'prz-almeida-3',
+      processoId: 'p-almeida-2',
+      titulo: 'Contrarrazões de apelação',
+      dataVencimento: '2026-07-20',
+      urgente: false,
+    },
+  ],
+  [OFFICE_NAVES]: [],
 };
