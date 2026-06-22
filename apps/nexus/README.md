@@ -64,9 +64,19 @@ apps/nexus/
         └── seed.ts
 ```
 
+## Testes
+
+```bash
+docker compose up -d            # Postgres precisa estar no ar
+npm run test:rls                # teste de isolamento multi-tenant (RLS)
+```
+
+O teste de RLS conecta como a role `nexus_app` (sujeita às policies) e prova
+fail-closed + isolamento entre escritórios. Relatório: `docs/qa/rls-isolation-report.md`.
+
 ## Status de implementação
 
 - [x] **Fase 1 — Arquitetura de dados:** schema, migrations, RLS, seed
-- [ ] **Fase 2 — Backend:** rotas App Router, auth Better Auth, context de office_id, mocks
-- [ ] **Fase 3 — Frontend:** layout, sidebar (13 módulos), tema dark, Dashboard
-- [ ] **Fase 4 — Segurança/QA:** teste de isolamento RLS
+- [x] **Fase 2 — Backend:** rotas App Router, auth Better Auth, context de office_id, mocks
+- [x] **Fase 3 — Frontend:** layout, sidebar (13 módulos), tema dark, Dashboard
+- [x] **Fase 4 — Segurança/QA:** teste de isolamento RLS (10/10 PASS)

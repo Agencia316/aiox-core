@@ -5,9 +5,10 @@
 --   * A aplicação conecta como role `nexus_app` (SEM BYPASSRLS, NÃO owner).
 --   * migrate/seed conectam como owner/superuser (bypassam RLS).
 --   * Toda tabela de tenant tem `office_id` e uma policy:
---       USING (office_id = current_setting('app.office_id', true)::uuid)
---   * Sem `app.office_id` setado → current_setting retorna NULL →
---     `office_id = NULL` é sempre falso → ZERO linhas. (Fail-closed.)
+--       USING (office_id = nullif(current_setting('app.office_id', true), '')::uuid)
+--   * Sem `app.office_id` setado (NULL) OU vazio ('') → nullif/current_setting
+--     resultam NULL → `office_id = NULL` é sempre falso → ZERO linhas. (Fail-closed.)
+--     O nullif evita erro de cast (''::uuid) quando a var é resetada para vazio.
 -- =============================================================================
 
 -- Extensão necessária para defaultRandom() (gen_random_uuid)
@@ -157,60 +158,60 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 ALTER TABLE "offices" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "offices_tenant_isolation" ON "offices"
   FOR ALL
-  USING ("id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("id" = current_setting('app.office_id', true)::uuid);
+  USING ("id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 -- Macro de policy padrão para tabelas com office_id.
 ALTER TABLE "users" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "users_tenant_isolation" ON "users"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "processos" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "processos_tenant_isolation" ON "processos"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "movimentacoes" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "movimentacoes_tenant_isolation" ON "movimentacoes"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "leads" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "leads_tenant_isolation" ON "leads"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "conversas_wa" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "conversas_wa_tenant_isolation" ON "conversas_wa"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "documentos" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "documentos_tenant_isolation" ON "documentos"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "prazos" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "prazos_tenant_isolation" ON "prazos"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "assinaturas" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "assinaturas_tenant_isolation" ON "assinaturas"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
 
 ALTER TABLE "cobrancas" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "cobrancas_tenant_isolation" ON "cobrancas"
   FOR ALL
-  USING ("office_id" = current_setting('app.office_id', true)::uuid)
-  WITH CHECK ("office_id" = current_setting('app.office_id', true)::uuid);
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
