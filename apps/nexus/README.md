@@ -80,3 +80,26 @@ fail-closed + isolamento entre escritórios. Relatório: `docs/qa/rls-isolation-
 - [x] **Fase 2 — Backend:** rotas App Router, auth Better Auth, context de office_id, mocks
 - [x] **Fase 3 — Frontend:** layout, sidebar (13 módulos), tema dark, Dashboard
 - [x] **Fase 4 — Segurança/QA:** teste de isolamento RLS (10/10 PASS)
+
+### Módulos (13/13 com UI)
+
+| Módulo | Rota | Estado |
+|--------|------|--------|
+| Dashboard | `/dashboard` | KPIs, funil, atividade recente |
+| Monitoramento | `/processos`, `/processos/[id]` | Tabela + detalhe com movimentações |
+| CRM & Leads | `/crm` | Kanban de 6 colunas, score IA |
+| Atendimento WhatsApp | `/atendimento` | Chat 2 colunas (stub Evolution) |
+| Peticionamento | `/peticionamento` | Lista + editor (stub INTIMA.AI) |
+| Portal do Cliente | `/portal` | Prévia self-service |
+| Agenda & Prazos | `/agenda` | Lista por vencimento |
+| Central de IA | `/ia` | Hub dos 6 agentes |
+| Cliente 360 | `/cliente-360` | Score de risco PF/PJ |
+| Jurimetria | `/jurimetria` | Prévia (Fase 2 · JUIT) |
+| Background Check | `/background-check` | BNMP + SEEU (add-on) |
+| Estúdio de Agentes | `/agentes` | Config dos 6 agentes |
+| Equipe & Plano | `/equipe` | Seats + plano + cobranças |
+
+### Integrações (stubs prontos para credencial)
+
+`src/server/integrations/` — `evolution.ts` (WhatsApp), `intima.ts` (peticionamento).
+Trocam de mock para real apenas com env configurado; nenhuma outra mudança no app.

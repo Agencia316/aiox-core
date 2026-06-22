@@ -140,3 +140,25 @@ export interface CobrancaDTO {
   status: CobrancaStatus;
   createdAt: string;
 }
+
+export interface Mandado {
+  tipo: string;
+  tribunal: string;
+  data: string;
+  situacao: 'ativo' | 'cumprido' | 'revogado';
+}
+
+export interface ExecucaoPenal {
+  processo: string;
+  regime: string;
+  situacao: string;
+}
+
+export interface BgcResultado {
+  nome: string;
+  cpf: string;
+  limpo: boolean;
+  mandados: Mandado[];
+  execucoesPenais: ExecucaoPenal[];
+  consultadoEm: string;
+}
