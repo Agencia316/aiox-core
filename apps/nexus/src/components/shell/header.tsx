@@ -4,8 +4,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 import { Icon } from '@/components/shell/icons';
-import { signOut } from '@/lib/auth-client';
 import { MODULES } from '@/lib/modules';
+
 
 export interface HeaderProps {
   usuarioNome: string;
@@ -20,6 +20,9 @@ export function Header({ usuarioNome, podeSair }: HeaderProps) {
   const sair = () => {
     startSaindo(async () => {
       try {
+        // Import dinâmico do client de auth — mantém o módulo do Header fora do
+        // grafo estático do better-auth (evita conflito de bundle no app shell).
+        const { signOut } = await import('@/lib/auth-client');
         await signOut();
       } catch {
         // ignora — segue para o login de qualquer forma
