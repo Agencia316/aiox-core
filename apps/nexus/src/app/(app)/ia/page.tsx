@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { ChatDemo } from '@/components/ia/chat-demo';
 import { Icon } from '@/components/shell/icons';
 import { AGENTES, disponivel, planoLabel, type Plano } from '@/lib/agentes';
 import { aiModel } from '@/lib/env';
@@ -33,6 +34,8 @@ export default async function CentralIaPage() {
           Anthropic Claude
         </p>
       </div>
+
+      <ChatDemo />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {AGENTES.map((a) => {
@@ -81,7 +84,8 @@ export default async function CentralIaPage() {
       </div>
 
       <p className="text-xs text-muted">
-        Os agentes consomem a Claude API (chave configurada em <code className="font-mono">ANTHROPIC_API_KEY</code>). Em modo demo (mocks ativos), as
+        Os agentes consomem a Claude API (chave configurada em{' '}
+        <code className="font-mono">ANTHROPIC_API_KEY</code>). Em modo demo (mocks ativos), as
         ações geradas por IA são simuladas localmente.
       </p>
     </div>
