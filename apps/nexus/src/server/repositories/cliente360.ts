@@ -87,3 +87,97 @@ export async function listClientesConsultados(officeId: string): Promise<Cliente
   // para que a UI sinalize "sem consultas" em vez de mostrar dados falsos.
   return [];
 }
+
+const NOMES_PF = [
+  'Antônio Carlos Ferreira',
+  'Beatriz Souza Andrade',
+  'Carlos Eduardo Nunes',
+  'Daniela Ribeiro Costa',
+  'Eduardo Martins Rocha',
+  'Fernanda Oliveira Dias',
+  'Gustavo Henrique Lima',
+  'Helena Cardoso Pinto',
+  'Igor Almeida Teixeira',
+  'Juliana Barbosa Mendes',
+];
+
+const NOMES_PJ = [
+  'Comércio Planalto Ltda.',
+  'Construtora Vale do Iguaçu S/A',
+  'Agroindústria Campos Gerais Ltda.',
+  'Logística Sul Transportes ME',
+  'Metalúrgica Contestado Ltda.',
+  'Têxtil Rio Negro S/A',
+  'Distribuidora Araucária Ltda.',
+  'Cerâmica Santa Catarina ME',
+];
+
+const APONTAMENTOS_ALTO = [
+  'Execução fiscal ativa',
+  'Ações trabalhistas em curso',
+  'Negativação Serasa',
+  'Protesto em cartório (em aberto)',
+  'Cheques sem fundo registrados',
+];
+
+const APONTAMENTOS_MEDIO = [
+  'Atraso pontual em tributos (regularizado)',
+  'Protesto quitado nos últimos 12 meses',
+  'Consulta de crédito recente por terceiros',
+];
+
+/** Soma ponderada dos dígitos → semente determinística e estável por documento. */
+function semente(digitos: string): number {
+  let acc = 0;
+  for (let i = 0; i < digitos.length; i += 1) {
+    acc = (acc + Number(digitos[i]) * (i + 1)) % 997;
+  }
+  return acc;
+}
+
+function formatarCpf(d: string): string {
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9, 11)}`;
+}
+
+function formatarCnpj(d: string): string {
+  return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8, 12)}-${d.slice(12, 14)}`;
+}
+
+/**
+ * Consulta simulada de risco a partir de um CPF/CNPJ. Determinística (o mesmo
+ * documento sempre devolve o mesmo score), apenas para demonstração — a consulta
+ * real integra Serasa/Receita/PJe. Retorna null se o documento for inválido.
+ */
+export function simularConsultaCliente(documentoRaw: string): ClienteRisco | null {
+  const digitos = documentoRaw.replace(/\D/g, '');
+  const isCpf = digitos.length === 11;
+  const isCnpj = digitos.length === 14;
+  if (!isCpf && !isCnpj) return null;
+
+  const s = semente(digitos);
+  const score = 25 + (s % 74); // 25..98
+  const nivel = nivelDeScore(score);
+
+  let apontamentos: string[] = [];
+  if (nivel === 'alto') {
+    apontamentos = [APONTAMENTOS_ALTO[s % APONTAMENTOS_ALTO.length], APONTAMENTOS_ALTO[(s + 2) % APONTAMENTOS_ALTO.length]];
+  } else if (nivel === 'medio') {
+    apontamentos = [APONTAMENTOS_MEDIO[s % APONTAMENTOS_MEDIO.length]];
+  }
+
+  const nome = isCpf ? NOMES_PF[s % NOMES_PF.length] : NOMES_PJ[s % NOMES_PJ.length];
+  const fontes = isCpf
+    ? ['Serasa', 'Receita Federal', 'PJe']
+    : ['Receita Federal', 'Trabalhista PJe', 'Cartório de Protestos'];
+
+  return {
+    nome,
+    documento: isCpf ? formatarCpf(digitos) : formatarCnpj(digitos),
+    tipoDocumento: isCpf ? 'CPF' : 'CNPJ',
+    score,
+    nivel,
+    apontamentos: [...new Set(apontamentos)],
+    fontes,
+    consultadoEm: new Date().toISOString(),
+  };
+}

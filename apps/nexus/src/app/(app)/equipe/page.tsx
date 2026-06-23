@@ -1,12 +1,13 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { SeatsEquipe } from '@/components/equipe/seats-equipe';
 import { Icon } from '@/components/shell/icons';
 import type { Plano } from '@/lib/agentes';
 import { formatBRL, formatDataFull } from '@/lib/format';
-import { planoInfo, SEAT_EXTRA } from '@/lib/planos';
+import { planoInfo } from '@/lib/planos';
 import { getOfficeContext } from '@/lib/office-context';
-import type { CobrancaDTO, UserRole } from '@/server/dto';
+import type { CobrancaDTO } from '@/server/dto';
 import { listCobrancas, listUsuarios } from '@/server/repositories/equipe';
 import { getOfficeProfile } from '@/server/repositories/office';
 
@@ -17,13 +18,6 @@ function normalizarPlano(raw: string): Plano {
     ? (raw as Plano)
     : 'solo';
 }
-
-const ROLE_LABEL: Record<UserRole, string> = {
-  owner: 'Titular',
-  admin: 'Administrador',
-  advogado: 'Advogado(a)',
-  secretaria: 'Secretaria',
-};
 
 const COB_STATUS: Record<CobrancaDTO['status'], { label: string; tone: string }> = {
   pago: { label: 'Pago', tone: 'bg-success/15 text-success' },
@@ -44,8 +38,6 @@ export default async function EquipePage() {
 
   const plano = planoInfo(normalizarPlano(profile.plano));
   const limite = plano.usuarios;
-  const usados = usuarios.length;
-  const limiteLabel = limite === null ? 'ilimitado' : String(limite);
 
   return (
     <div className="space-y-6">
@@ -88,43 +80,8 @@ export default async function EquipePage() {
           </button>
         </section>
 
-        {/* Seats */}
-        <section className="nx-card p-5 lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h3 className="font-display text-base font-semibold text-ink">Usuários</h3>
-            <span className="text-sm text-muted">
-              {usados} de {limiteLabel} seats · extra {formatBRL(SEAT_EXTRA.mensal)}/mês
-            </span>
-          </div>
-
-          <ul className="mt-4 divide-y divide-border">
-            {usuarios.map((u) => (
-              <li key={u.id} className="flex items-center gap-3 py-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand/20 text-sm font-semibold text-brand">
-                  {u.nome
-                    .split(' ')
-                    .slice(0, 2)
-                    .map((p) => p[0])
-                    .join('')
-                    .toUpperCase()}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-ink">{u.nome}</p>
-                  <p className="truncate text-xs text-muted">{u.email}</p>
-                </div>
-                <span className="nx-chip bg-elevated text-muted">{ROLE_LABEL[u.role]}</span>
-              </li>
-            ))}
-          </ul>
-
-          <button
-            type="button"
-            disabled={limite !== null && usados >= limite}
-            className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-ink disabled:opacity-50"
-          >
-            <Icon name="users" size={14} /> Convidar usuário
-          </button>
-        </section>
+        {/* Seats — interativo (convite de usuário no demo) */}
+        <SeatsEquipe inicial={usuarios} limite={limite} />
       </div>
 
       {/* Cobranças */}
