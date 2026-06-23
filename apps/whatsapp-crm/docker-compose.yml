@@ -1,0 +1,22 @@
+services:
+  whatsapp-crm:
+    build: .
+    image: aiox/whatsapp-crm:0.2.0
+    container_name: whatsapp-crm
+    restart: unless-stopped
+    init: true            # PID 1 limpo (Chromium spawns muitos processos)
+    shm_size: '1gb'       # Chromium crasha com /dev/shm pequeno (padrão 64MB)
+    ports:
+      - '3100:3100'
+    volumes:
+      # Persistência entre restarts:
+      - ./data:/app/data
+      - ./sessions:/app/sessions
+    environment:
+      DB_PATH: /app/data/whatsapp-crm.db
+      WHATSAPP_SESSION_PATH: /app/sessions
+      LOG_LEVEL: info
+    env_file:
+      # Chaves OPENAI_API_KEY / GEMINI_API_KEY ficam aqui.
+      # Se o arquivo não existir, copie .env.example primeiro: `cp .env.example .env`
+      - .env

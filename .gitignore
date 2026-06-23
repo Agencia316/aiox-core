@@ -147,7 +147,11 @@ aiox-core/index.esm.js
 aiox-core/*.map
 
 # Applications (separate deployments, NOT part of npm package)
-apps/
+# Block everything in apps/ by default; allow-list specific apps below.
+apps/*
+# Allow-list: apps versionados neste repositório (cada um possui seu próprio .gitignore para artefatos de runtime)
+!apps/nexus/
+!apps/whatsapp-crm/
 
 # External projects (separate repositories)
 aiox-guide-app/

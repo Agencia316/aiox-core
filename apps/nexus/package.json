@@ -1,0 +1,46 @@
+{
+  "name": "@nexus/app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nexus — Plataforma de Inteligência Jurídica (multi-tenant SaaS)",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:migrate:auth": "tsx src/db/migrate-auth.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:seed:auth": "tsx src/db/seed-auth.ts",
+    "db:studio": "drizzle-kit studio",
+    "test": "vitest run",
+    "test:rls": "vitest run src/db/__tests__/rls-isolation.test.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.105.0",
+    "better-auth": "^1.2.0",
+    "drizzle-orm": "^0.45.2",
+    "next": "^14.2.35",
+    "pg": "^8.13.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.31.4",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.14",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.5"
+  }
+}
