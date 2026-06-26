@@ -37,6 +37,9 @@ CREATE TYPE "lead_origem" AS ENUM ('whatsapp', 'indicacao', 'site', 'anuncio', '
 CREATE TYPE "documento_tipo" AS ENUM ('peticao', 'contrato', 'procuracao', 'parecer', 'outro');
 CREATE TYPE "assinatura_status" AS ENUM ('pendente', 'assinado', 'recusado', 'expirado');
 CREATE TYPE "cobranca_status" AS ENUM ('pendente', 'pago', 'vencido', 'cancelado');
+CREATE TYPE "honorario_tipo" AS ENUM ('fixo', 'hora', 'exito');
+CREATE TYPE "honorario_status" AS ENUM ('aberto', 'faturado', 'recebido', 'atrasado');
+CREATE TYPE "despesa_categoria" AS ENUM ('custas', 'diligencia', 'pericia', 'transporte', 'outro');
 
 -- -----------------------------------------------------------------------------
 -- Tabelas
@@ -143,6 +146,42 @@ CREATE TABLE "cobrancas" (
   "created_at" timestamptz NOT NULL DEFAULT now()
 );
 
+CREATE TABLE "honorarios" (
+  "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  "office_id" uuid NOT NULL REFERENCES "offices"("id") ON DELETE CASCADE,
+  "processo_id" uuid REFERENCES "processos"("id") ON DELETE SET NULL,
+  "cliente_nome" text NOT NULL,
+  "descricao" text NOT NULL,
+  "tipo" "honorario_tipo" NOT NULL DEFAULT 'fixo',
+  "valor" numeric(14, 2) NOT NULL,
+  "status" "honorario_status" NOT NULL DEFAULT 'aberto',
+  "vencimento" date,
+  "created_at" timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE "despesas" (
+  "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  "office_id" uuid NOT NULL REFERENCES "offices"("id") ON DELETE CASCADE,
+  "processo_id" uuid REFERENCES "processos"("id") ON DELETE SET NULL,
+  "descricao" text NOT NULL,
+  "categoria" "despesa_categoria" NOT NULL DEFAULT 'outro',
+  "valor" numeric(14, 2) NOT NULL,
+  "reembolsavel" boolean NOT NULL DEFAULT false,
+  "created_at" timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE "timesheets" (
+  "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  "office_id" uuid NOT NULL REFERENCES "offices"("id") ON DELETE CASCADE,
+  "processo_id" uuid REFERENCES "processos"("id") ON DELETE SET NULL,
+  "descricao" text NOT NULL,
+  "advogado" text NOT NULL,
+  "minutos" integer NOT NULL,
+  "valor_hora" numeric(14, 2) NOT NULL,
+  "data" date NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT now()
+);
+
 -- -----------------------------------------------------------------------------
 -- Grants para a role da aplicação
 -- -----------------------------------------------------------------------------
@@ -212,6 +251,24 @@ CREATE POLICY "assinaturas_tenant_isolation" ON "assinaturas"
 
 ALTER TABLE "cobrancas" ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "cobrancas_tenant_isolation" ON "cobrancas"
+  FOR ALL
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
+
+ALTER TABLE "honorarios" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "honorarios_tenant_isolation" ON "honorarios"
+  FOR ALL
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
+
+ALTER TABLE "despesas" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "despesas_tenant_isolation" ON "despesas"
+  FOR ALL
+  USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
+  WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);
+
+ALTER TABLE "timesheets" ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "timesheets_tenant_isolation" ON "timesheets"
   FOR ALL
   USING ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid)
   WITH CHECK ("office_id" = nullif(current_setting('app.office_id', true), '')::uuid);

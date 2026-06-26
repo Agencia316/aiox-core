@@ -1,7 +1,7 @@
 /**
- * Os 13 módulos do Nexus (briefing §3). Fonte única para a sidebar e o
- * roteamento. `phase2` marca módulos planejados para a Fase 2 do produto;
- * `locked` marca recursos restritos a planos superiores.
+ * Os módulos do Nexus (briefing §3 + Financeiro para paridade Astrea). Fonte
+ * única para a sidebar e o roteamento. `phase2` marca módulos planejados para a
+ * Fase 2 do produto; `locked` marca recursos restritos a planos superiores.
  */
 import type { IconName } from '@/components/shell/icons';
 
@@ -22,6 +22,7 @@ export const MODULES: ModuleDef[] = [
   { slug: 'peticionamento', label: 'Peticionamento', href: '/peticionamento', icon: 'doc' },
   { slug: 'portal', label: 'Portal do Cliente', href: '/portal', icon: 'portal' },
   { slug: 'agenda', label: 'Agenda & Prazos', href: '/agenda', icon: 'calendar' },
+  { slug: 'financeiro', label: 'Financeiro', href: '/financeiro', icon: 'wallet' },
   { slug: 'ia', label: 'Central de IA', href: '/ia', icon: 'spark' },
   { slug: 'cliente-360', label: 'Cliente 360', href: '/cliente-360', icon: 'shield' },
   { slug: 'jurimetria', label: 'Jurimetria', href: '/jurimetria', icon: 'chart', phase2: true },

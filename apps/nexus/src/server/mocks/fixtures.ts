@@ -7,11 +7,14 @@ import { OFFICE_ALMEIDA, OFFICE_NAVES } from '@/db/ids';
 import type {
   CobrancaDTO,
   ConversaDTO,
+  DespesaDTO,
   DocumentoDTO,
+  HonorarioDTO,
   LeadDTO,
   MovimentacaoDTO,
   PrazoDTO,
   ProcessoDTO,
+  TimesheetDTO,
   UsuarioDTO,
 } from '@/server/dto';
 
@@ -432,6 +435,134 @@ export const PRAZOS_MOCK: Record<string, PrazoDTO[]> = {
       titulo: 'Contrarrazões de apelação',
       dataVencimento: '2026-07-20',
       urgente: false,
+    },
+  ],
+  [OFFICE_NAVES]: [],
+};
+
+/**
+ * Honorários (receitas) por escritório. Em produção, a baixa de pagamento vem
+ * por webhook do Asaas; em modo demo, o painel `/financeiro` opera sobre estas
+ * fixtures.
+ */
+export const HONORARIOS_MOCK: Record<string, HonorarioDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'hon-almeida-1',
+      processoId: 'p-almeida-1',
+      clienteNome: 'Indústria Madeira Verde Ltda.',
+      descricao: 'Honorários contratuais — reclamação trabalhista',
+      tipo: 'fixo',
+      valor: 8000,
+      status: 'recebido',
+      vencimento: '2026-06-05',
+      createdAt: '2026-05-02T12:00:00.000Z',
+    },
+    {
+      id: 'hon-almeida-2',
+      processoId: 'p-almeida-3',
+      clienteNome: 'Cooperativa Agro Caçador',
+      descricao: 'Êxito — recuperação de crédito (15%)',
+      tipo: 'exito',
+      valor: 36000,
+      status: 'aberto',
+      vencimento: null,
+      createdAt: '2026-03-18T12:00:00.000Z',
+    },
+    {
+      id: 'hon-almeida-3',
+      processoId: 'p-almeida-2',
+      clienteNome: 'João Batista dos Santos',
+      descricao: 'Honorários — fase recursal',
+      tipo: 'fixo',
+      valor: 4500,
+      status: 'faturado',
+      vencimento: '2026-07-10',
+      createdAt: '2026-05-10T12:00:00.000Z',
+    },
+    {
+      id: 'hon-almeida-4',
+      processoId: 'p-almeida-4',
+      clienteNome: 'Maria Aparecida Lima',
+      descricao: 'Honorários — divórcio consensual',
+      tipo: 'fixo',
+      valor: 3200,
+      status: 'atrasado',
+      vencimento: '2026-06-10',
+      createdAt: '2026-04-22T12:00:00.000Z',
+    },
+  ],
+  [OFFICE_NAVES]: [
+    {
+      id: 'hon-naves-1',
+      processoId: 'p-naves-1',
+      clienteNome: 'Confidencial — Naves',
+      descricao: 'Honorários contratuais',
+      tipo: 'fixo',
+      valor: 6000,
+      status: 'aberto',
+      vencimento: '2026-07-01',
+      createdAt: '2026-06-01T12:00:00.000Z',
+    },
+  ],
+};
+
+/** Despesas (saídas) por escritório. */
+export const DESPESAS_MOCK: Record<string, DespesaDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'desp-almeida-1',
+      processoId: 'p-almeida-1',
+      descricao: 'Custas iniciais — TJSC',
+      categoria: 'custas',
+      valor: 620,
+      reembolsavel: true,
+      createdAt: '2026-05-03T12:00:00.000Z',
+    },
+    {
+      id: 'desp-almeida-2',
+      processoId: 'p-almeida-3',
+      descricao: 'Diligência de oficial de justiça',
+      categoria: 'diligencia',
+      valor: 180,
+      reembolsavel: true,
+      createdAt: '2026-04-01T12:00:00.000Z',
+    },
+    {
+      id: 'desp-almeida-3',
+      processoId: null,
+      descricao: 'Assinatura de jurisprudência',
+      categoria: 'outro',
+      valor: 149,
+      reembolsavel: false,
+      createdAt: '2026-06-01T12:00:00.000Z',
+    },
+  ],
+  [OFFICE_NAVES]: [],
+};
+
+/** Timesheets (horas trabalhadas) por escritório. */
+export const TIMESHEETS_MOCK: Record<string, TimesheetDTO[]> = {
+  [OFFICE_ALMEIDA]: [
+    {
+      id: 'ts-almeida-1',
+      processoId: 'p-almeida-1',
+      descricao: 'Elaboração de réplica',
+      advogado: 'Dra. Carolina Almeida',
+      minutos: 150,
+      valorHora: 350,
+      data: '2026-06-19',
+      createdAt: '2026-06-19T17:00:00.000Z',
+    },
+    {
+      id: 'ts-almeida-2',
+      processoId: 'p-almeida-2',
+      descricao: 'Estudo para apelação',
+      advogado: 'Dr. Marcelo Rocha',
+      minutos: 90,
+      valorHora: 300,
+      data: '2026-06-14',
+      createdAt: '2026-06-14T16:00:00.000Z',
     },
   ],
   [OFFICE_NAVES]: [],

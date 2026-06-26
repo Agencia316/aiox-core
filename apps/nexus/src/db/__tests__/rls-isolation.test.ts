@@ -47,10 +47,11 @@ beforeAll(async () => {
 
   // Limpa objetos de execuções anteriores (DB reaproveitado).
   await admin.query(`
-    DROP TABLE IF EXISTS cobrancas, assinaturas, prazos, documentos, conversas_wa,
-      leads, movimentacoes, processos, users, offices CASCADE;
+    DROP TABLE IF EXISTS timesheets, despesas, honorarios, cobrancas, assinaturas,
+      prazos, documentos, conversas_wa, leads, movimentacoes, processos, users, offices CASCADE;
     DROP TYPE IF EXISTS plano, user_role, processo_status, processo_fase,
-      lead_coluna_funil, lead_origem, documento_tipo, assinatura_status, cobranca_status CASCADE;
+      lead_coluna_funil, lead_origem, documento_tipo, assinatura_status, cobranca_status,
+      honorario_tipo, honorario_status, despesa_categoria CASCADE;
   `);
 
   await admin.query(readFileSync(MIGRATION, 'utf8'));

@@ -18,6 +18,7 @@ export type IconName =
   | 'search'
   | 'robot'
   | 'users'
+  | 'wallet'
   | 'capi';
 
 type PathProps = SVGProps<SVGSVGElement>;
@@ -114,6 +115,13 @@ const PATHS: Record<IconName, JSX.Element> = {
       <circle cx="9" cy="8" r="3.2" />
       <path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
       <path d="M16 5.5a3.2 3.2 0 0 1 0 6M18 20a6.5 6.5 0 0 0-3-5.5" />
+    </>
+  ),
+  wallet: (
+    <>
+      <rect x="3" y="6" width="18" height="13" rx="2" />
+      <path d="M3 10h18" />
+      <path d="M16 14h2" />
     </>
   ),
   capi: (

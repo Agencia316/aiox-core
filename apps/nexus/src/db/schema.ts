@@ -84,6 +84,23 @@ export const cobrancaStatusEnum = pgEnum('cobranca_status', [
   'cancelado',
 ]);
 
+export const honorarioTipoEnum = pgEnum('honorario_tipo', ['fixo', 'hora', 'exito']);
+
+export const honorarioStatusEnum = pgEnum('honorario_status', [
+  'aberto',
+  'faturado',
+  'recebido',
+  'atrasado',
+]);
+
+export const despesaCategoriaEnum = pgEnum('despesa_categoria', [
+  'custas',
+  'diligencia',
+  'pericia',
+  'transporte',
+  'outro',
+]);
+
 // =============================================================================
 // offices — raiz do tenant
 // =============================================================================
@@ -260,6 +277,60 @@ export const cobrancas = pgTable('cobrancas', {
 });
 
 // =============================================================================
+// honorarios — receitas do escritório (fixo / por hora / por êxito)
+// =============================================================================
+
+export const honorarios = pgTable('honorarios', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  officeId: uuid('office_id')
+    .notNull()
+    .references(() => offices.id, { onDelete: 'cascade' }),
+  processoId: uuid('processo_id').references(() => processos.id, { onDelete: 'set null' }),
+  clienteNome: text('cliente_nome').notNull(),
+  descricao: text('descricao').notNull(),
+  tipo: honorarioTipoEnum('tipo').notNull().default('fixo'),
+  valor: numeric('valor', { precision: 14, scale: 2 }).notNull(),
+  status: honorarioStatusEnum('status').notNull().default('aberto'),
+  vencimento: date('vencimento'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+// =============================================================================
+// despesas — saídas do escritório (custas, diligências, perícias, etc.)
+// =============================================================================
+
+export const despesas = pgTable('despesas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  officeId: uuid('office_id')
+    .notNull()
+    .references(() => offices.id, { onDelete: 'cascade' }),
+  processoId: uuid('processo_id').references(() => processos.id, { onDelete: 'set null' }),
+  descricao: text('descricao').notNull(),
+  categoria: despesaCategoriaEnum('categoria').notNull().default('outro'),
+  valor: numeric('valor', { precision: 14, scale: 2 }).notNull(),
+  reembolsavel: boolean('reembolsavel').notNull().default(false),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+// =============================================================================
+// timesheets — horas trabalhadas (base para honorário por hora)
+// =============================================================================
+
+export const timesheets = pgTable('timesheets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  officeId: uuid('office_id')
+    .notNull()
+    .references(() => offices.id, { onDelete: 'cascade' }),
+  processoId: uuid('processo_id').references(() => processos.id, { onDelete: 'set null' }),
+  descricao: text('descricao').notNull(),
+  advogado: text('advogado').notNull(),
+  minutos: integer('minutos').notNull(),
+  valorHora: numeric('valor_hora', { precision: 14, scale: 2 }).notNull(),
+  data: date('data').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+// =============================================================================
 // Tipos inferidos (consumidos pelo @backend e @frontend)
 // =============================================================================
 
@@ -283,6 +354,12 @@ export type Assinatura = typeof assinaturas.$inferSelect;
 export type NewAssinatura = typeof assinaturas.$inferInsert;
 export type Cobranca = typeof cobrancas.$inferSelect;
 export type NewCobranca = typeof cobrancas.$inferInsert;
+export type Honorario = typeof honorarios.$inferSelect;
+export type NewHonorario = typeof honorarios.$inferInsert;
+export type Despesa = typeof despesas.$inferSelect;
+export type NewDespesa = typeof despesas.$inferInsert;
+export type Timesheet = typeof timesheets.$inferSelect;
+export type NewTimesheet = typeof timesheets.$inferInsert;
 
 /** Todas as tabelas de tenant (têm office_id + RLS). Usado por testes e tooling. */
 export const TENANT_TABLES = [
@@ -295,4 +372,7 @@ export const TENANT_TABLES = [
   'prazos',
   'assinaturas',
   'cobrancas',
+  'honorarios',
+  'despesas',
+  'timesheets',
 ] as const;

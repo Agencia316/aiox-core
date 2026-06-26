@@ -141,6 +141,54 @@ export interface CobrancaDTO {
   createdAt: string;
 }
 
+export type HonorarioTipo = 'fixo' | 'hora' | 'exito';
+export type HonorarioStatus = 'aberto' | 'faturado' | 'recebido' | 'atrasado';
+
+export interface HonorarioDTO {
+  id: string;
+  processoId: string | null;
+  clienteNome: string;
+  descricao: string;
+  tipo: HonorarioTipo;
+  valor: number;
+  status: HonorarioStatus;
+  vencimento: string | null;
+  createdAt: string;
+}
+
+export type DespesaCategoria = 'custas' | 'diligencia' | 'pericia' | 'transporte' | 'outro';
+
+export interface DespesaDTO {
+  id: string;
+  processoId: string | null;
+  descricao: string;
+  categoria: DespesaCategoria;
+  valor: number;
+  reembolsavel: boolean;
+  createdAt: string;
+}
+
+export interface TimesheetDTO {
+  id: string;
+  processoId: string | null;
+  descricao: string;
+  advogado: string;
+  minutos: number;
+  valorHora: number;
+  data: string;
+  createdAt: string;
+}
+
+/** Agregado financeiro consumido pelos cards do painel `/financeiro`. */
+export interface ResumoFinanceiro {
+  recebido: number;
+  aReceber: number;
+  atrasado: number;
+  despesas: number;
+  saldo: number;
+  horasNoMes: number;
+}
+
 export interface Mandado {
   tipo: string;
   tribunal: string;
