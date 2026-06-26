@@ -265,6 +265,77 @@ async function main(): Promise<void> {
       status: 'assinado',
     });
 
+    // Financeiro — honorários, despesas e timesheets (paridade Astrea).
+    await db.insert(schema.honorarios).values([
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[0].id,
+        clienteNome: 'Indústria Madeira Verde Ltda.',
+        descricao: 'Honorários contratuais — reclamação trabalhista',
+        tipo: 'fixo',
+        valor: '8000.00',
+        status: 'recebido',
+        vencimento: '2026-06-05',
+      },
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[2].id,
+        clienteNome: 'Cooperativa Agro Caçador',
+        descricao: 'Êxito — recuperação de crédito (15%)',
+        tipo: 'exito',
+        valor: '36000.00',
+        status: 'aberto',
+      },
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[3].id,
+        clienteNome: 'Maria Aparecida Lima',
+        descricao: 'Honorários — divórcio consensual',
+        tipo: 'fixo',
+        valor: '3200.00',
+        status: 'atrasado',
+        vencimento: '2026-06-10',
+      },
+    ]);
+    await db.insert(schema.despesas).values([
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[0].id,
+        descricao: 'Custas iniciais — TJSC',
+        categoria: 'custas',
+        valor: '620.00',
+        reembolsavel: true,
+      },
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[2].id,
+        descricao: 'Diligência de oficial de justiça',
+        categoria: 'diligencia',
+        valor: '180.00',
+        reembolsavel: true,
+      },
+    ]);
+    await db.insert(schema.timesheets).values([
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[0].id,
+        descricao: 'Elaboração de réplica',
+        advogado: 'Dra. Carolina Almeida',
+        minutos: 150,
+        valorHora: '350.00',
+        data: '2026-06-19',
+      },
+      {
+        officeId: OFFICE_ALMEIDA,
+        processoId: processosAlmeida[1].id,
+        descricao: 'Estudo para apelação',
+        advogado: 'Dr. Marcelo Rocha',
+        minutos: 90,
+        valorHora: '300.00',
+        data: '2026-06-14',
+      },
+    ]);
+
     // -------------------------------------------------------------------------
     // Tenant 2 — Naves Advocacia (somente para teste de isolamento)
     // -------------------------------------------------------------------------
@@ -301,7 +372,7 @@ async function main(): Promise<void> {
     });
 
     console.log('✓ Seed concluído.');
-    console.log(`  Almeida & Rocha (${OFFICE_ALMEIDA}): 3 usuários, 5 processos, 6 leads`);
+    console.log(`  Almeida & Rocha (${OFFICE_ALMEIDA}): 3 usuários, 5 processos, 6 leads, 3 honorários, 2 despesas, 2 timesheets`);
     console.log(`  Naves Advocacia (${OFFICE_NAVES}): 1 usuário, 1 processo, 1 lead`);
   } catch (error) {
     console.error('✗ Falha no seed', { error });
