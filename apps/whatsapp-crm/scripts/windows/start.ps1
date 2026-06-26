@@ -1,6 +1,6 @@
-# Jurinbox — start (uso diário após install.ps1)
+# Jurinbox - start (uso diario apos install.ps1)
 #
-# Sobe o container e abre o navegador. NÃO precisa rodar como admin.
+# Sobe o container e abre o navegador. NAO precisa rodar como admin.
 
 $ErrorActionPreference = 'Stop'
 $REPO_DIR = Join-Path $env:USERPROFILE 'jurinbox'
@@ -8,7 +8,7 @@ $APP_DIR  = Join-Path $REPO_DIR 'apps\whatsapp-crm'
 $APP_URL  = 'http://localhost:3100'
 
 if (-not (Test-Path $APP_DIR)) {
-  Write-Host "[X] Repo não encontrado em $APP_DIR — rode install.ps1 primeiro" -ForegroundColor Red
+  Write-Host "[X] Repo nao encontrado em $APP_DIR - rode install.ps1 primeiro" -ForegroundColor Red
   exit 1
 }
 
@@ -32,7 +32,7 @@ try {
     Write-Host -NoNewline '.'
   }
   Write-Host ''
-  Write-Host "[!] App ainda não respondeu. Rode: docker compose logs -f" -ForegroundColor Yellow
+  Write-Host "[!] App ainda nao respondeu. Rode: docker compose logs -f" -ForegroundColor Yellow
 } finally {
   Pop-Location
 }

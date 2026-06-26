@@ -1,10 +1,10 @@
-# Jurinbox — One-click Windows Installer (PowerShell)
+# Jurinbox - One-click Windows Installer (PowerShell)
 #
 # Roda como ADMIN. Faz tudo:
 #  1. Garante winget
 #  2. Instala Git (se faltar)
 #  3. Instala Docker Desktop (se faltar)
-#  4. Pede reboot (Docker exige) — depois do reboot rode o script de novo
+#  4. Pede reboot (Docker exige) - depois do reboot rode o script de novo
 #  5. Espera Docker daemon iniciar
 #  6. Clona / atualiza o repo
 #  7. Cria .env se faltar
@@ -14,7 +14,7 @@
 #
 # Uso:
 #   1. Salve este arquivo como C:\Users\<voce>\Downloads\install-jurinbox.ps1
-#   2. Botão direito → "Executar com PowerShell" (como administrador)
+#   2. Botao direito -> "Executar com PowerShell" (como administrador)
 #   3. Se aparecer aviso de execution policy: rode primeiro
 #        Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 #
@@ -66,7 +66,7 @@ function Assert-Windows11 {
   $os = (Get-CimInstance Win32_OperatingSystem).Caption
   Write-Info "Detectado: $os"
   if ($os -notmatch 'Windows (10|11)') {
-    Write-Fail "Sistema não suportado. Precisa de Windows 10 ou 11."
+    Write-Fail "Sistema nao suportado. Precisa de Windows 10 ou 11."
     exit 1
   }
 }
@@ -74,7 +74,7 @@ function Assert-Windows11 {
 function Assert-Admin {
   if (-not (Test-Admin)) {
     Write-Fail "Este script precisa rodar como Administrador."
-    Write-Info "Botão direito no arquivo .ps1 → 'Executar com PowerShell' (como admin)"
+    Write-Info "Botao direito no arquivo .ps1 -> 'Executar com PowerShell' (como admin)"
     exit 1
   }
 }
@@ -82,10 +82,10 @@ function Assert-Admin {
 # ---------- Installers ----------
 function Install-Winget {
   if (Test-Command 'winget') {
-    Write-Success "winget disponível"
+    Write-Success "winget disponivel"
     return
   }
-  Write-Warn "winget não encontrado. Instale 'App Installer' pela Microsoft Store e rode este script de novo."
+  Write-Warn "winget nao encontrado. Instale 'App Installer' pela Microsoft Store e rode este script de novo."
   Write-Info "Link: https://apps.microsoft.com/detail/9NBLGGH4NNS1"
   exit 1
 }
@@ -93,7 +93,7 @@ function Install-Winget {
 function Install-Git {
   if (Test-Command 'git') {
     $v = (git --version 2>&1).Trim()
-    Write-Success "Git já instalado: $v"
+    Write-Success "Git ja instalado: $v"
     return
   }
   Write-Step 'Instalando Git via winget'
@@ -107,14 +107,14 @@ function Install-Git {
 function Install-Docker {
   if (Test-Command 'docker') {
     $v = (docker --version 2>&1).Trim()
-    Write-Success "Docker já instalado: $v"
+    Write-Success "Docker ja instalado: $v"
     return $false  # didn't install now
   }
   Write-Step 'Instalando Docker Desktop via winget (pode demorar ~5 min)'
   winget install -e --id Docker.DockerDesktop --silent --accept-source-agreements --accept-package-agreements
   if ($LASTEXITCODE -ne 0) { Write-Fail 'Falha ao instalar Docker Desktop'; exit 1 }
   Write-Success 'Docker Desktop instalado'
-  return $true  # installed now → needs reboot
+  return $true  # installed now -> needs reboot
 }
 
 function Wait-DockerDaemon {
@@ -132,7 +132,7 @@ function Wait-DockerDaemon {
     try {
       docker info 2>&1 | Out-Null
       if ($LASTEXITCODE -eq 0) {
-        Write-Success "Docker daemon respondendo (após ${waited}s)"
+        Write-Success "Docker daemon respondendo (apos ${waited}s)"
         return
       }
     } catch {}
@@ -141,7 +141,7 @@ function Wait-DockerDaemon {
     Write-Host -NoNewline '.'
   }
   Write-Host ''
-  Write-Fail "Docker daemon não respondeu em ${maxWaitSec}s"
+  Write-Fail "Docker daemon nao respondeu em ${maxWaitSec}s"
   Write-Info 'Abra Docker Desktop manualmente, aguarde "Engine running" verde, e rode este script de novo.'
   exit 1
 }
@@ -154,7 +154,7 @@ function Sync-Repo {
     git clone $REPO_URL $REPO_DIR
     if ($LASTEXITCODE -ne 0) { Write-Fail 'git clone falhou'; exit 1 }
   } else {
-    Write-Info 'Repo já existe — atualizando'
+    Write-Info 'Repo ja existe - atualizando'
     Push-Location $REPO_DIR
     try {
       git fetch origin $REPO_BRANCH
@@ -173,11 +173,11 @@ function Ensure-Env {
   $envPath = Join-Path $APP_DIR '.env'
   $examplePath = Join-Path $APP_DIR '.env.example'
   if (Test-Path $envPath) {
-    Write-Success ".env já existe (mantido)"
+    Write-Success ".env ja existe (mantido)"
     return
   }
   if (-not (Test-Path $examplePath)) {
-    Write-Fail ".env.example não encontrado em $APP_DIR"
+    Write-Fail ".env.example nao encontrado em $APP_DIR"
     exit 1
   }
   Copy-Item $examplePath $envPath
@@ -190,7 +190,7 @@ function Start-App {
   Push-Location $APP_DIR
   try {
     docker compose up -d --build
-    if ($LASTEXITCODE -ne 0) { Write-Fail 'docker compose falhou — veja logs acima'; exit 1 }
+    if ($LASTEXITCODE -ne 0) { Write-Fail 'docker compose falhou - veja logs acima'; exit 1 }
   } finally { Pop-Location }
   Write-Success 'Container subindo'
 }
@@ -212,7 +212,7 @@ function Wait-AppReady {
     Write-Host -NoNewline '.'
   }
   Write-Host ''
-  Write-Warn "App ainda não respondeu em ${maxWaitSec}s — verifique:"
+  Write-Warn "App ainda nao respondeu em ${maxWaitSec}s - verifique:"
   Write-Info "  docker compose -f $APP_DIR\docker-compose.yml logs -f"
 }
 
@@ -222,22 +222,22 @@ function Open-Browser {
 
 # ---------- State machine ----------
 function Schedule-RebootResume {
-  # Cria task agendada que roda este script no próximo logon
+  # Cria task agendada que roda este script no proximo logon
   $scriptPath = $MyInvocation.MyCommand.Path
   if (-not $scriptPath) {
-    # Fallback se invocado de pipe — copia o script pra um local fixo
-    Write-Warn 'Não detectei caminho do script — você terá que rodá-lo manualmente após reboot.'
+    # Fallback se invocado de pipe - copia o script pra um local fixo
+    Write-Warn 'Nao detectei caminho do script - voce tera que roda-lo manualmente apos reboot.'
     return
   }
   $taskName = 'JurinboxInstallerResume'
-  # Remove se já existe
+  # Remove se ja existe
   Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
   $action = New-ScheduledTaskAction -Execute 'PowerShell.exe' -Argument "-ExecutionPolicy Bypass -File `"$scriptPath`""
   $trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
   $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -RunLevel Highest
   $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
   Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings | Out-Null
-  Write-Success "Task '$taskName' agendada — vai rodar automaticamente após reboot"
+  Write-Success "Task '$taskName' agendada - vai rodar automaticamente apos reboot"
 }
 
 function Cleanup-RebootTask {
@@ -248,7 +248,7 @@ function Cleanup-RebootTask {
 function Main {
   Write-Host ''
   Write-Host '====================================' -ForegroundColor Cyan
-  Write-Host '  Jurinbox — Windows Installer'        -ForegroundColor Cyan
+  Write-Host '  Jurinbox - Windows Installer'        -ForegroundColor Cyan
   Write-Host '====================================' -ForegroundColor Cyan
 
   Assert-Admin
@@ -267,7 +267,7 @@ function Main {
       Write-Host '====================================' -ForegroundColor Yellow
       Write-Host '  REINICIE O PC PARA CONTINUAR'      -ForegroundColor Yellow
       Write-Host '====================================' -ForegroundColor Yellow
-      Write-Info 'Após reiniciar, o instalador volta sozinho. Pode fechar esta janela.'
+      Write-Info 'Apos reiniciar, o instalador volta sozinho. Pode fechar esta janela.'
       $reboot = Read-Host 'Reiniciar agora? (S/N)'
       if ($reboot -match '^[SsYy]') { Restart-Computer -Force }
       exit 0
@@ -295,11 +295,11 @@ function Main {
   Write-Host '  Jurinbox rodando em ' -ForegroundColor Green -NoNewline
   Write-Host $APP_URL -ForegroundColor Cyan
   Write-Host '====================================' -ForegroundColor Green
-  Write-Info 'Comandos úteis (PowerShell, fora desta janela):'
+  Write-Info 'Comandos uteis (PowerShell, fora desta janela):'
   Write-Info "  cd $APP_DIR"
   Write-Info '  docker compose logs -f       # ver logs em tempo real'
   Write-Info '  docker compose restart       # reiniciar'
-  Write-Info '  docker compose down          # parar (mantém dados)'
+  Write-Info '  docker compose down          # parar (mantem dados)'
   Write-Info '  docker compose up -d --build # subir de novo'
 }
 
